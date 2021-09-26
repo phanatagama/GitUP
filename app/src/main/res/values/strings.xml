@@ -4,6 +4,17 @@
     <string name="user_name">Name</string>
     <string name="logo">Logo</string>
     <string name="information">Informasi</string>
+    <string name="share">Share</string>
+    <string name="data_following">data_following</string>
+    <string name="following">Following</string>
+    <string name="data_follower">data_follower</string>
+    <string name="follower">Follower</string>
+    <string name="data_repository">data_repository</string>
+    <string name="repository">Repository</string>
+    <string name="data_location">data_location</string>
+    <string name="location">Location</string>
+    <string name="data_company">data_company</string>
+    <string name="company">Company</string>
     <string-array name="username">
         <item>JakeWharton</item>
         <item>amitshekhariitbhu</item>
@@ -40,7 +51,7 @@
         <item>Bojongsoang - Bandung Jawa Barat</item>
         <item>Jakarta Indonesia</item>
     </string-array>
-    <string-array name="repository">
+    <integer-array name="repository">
         <item>102</item>
         <item>37</item>
         <item>9</item>
@@ -51,7 +62,7 @@
         <item>110</item>
         <item>1064</item>
         <item>65</item>
-    </string-array>
+    </integer-array>
     <string-array name="company">
         <item>Google, Inc.</item>
         <item>MindOrksOpenSource</item>
@@ -64,7 +75,7 @@
         <item>JVMDeveloperID @KotlinID @IDDevOps</item>
         <item>Nusantara Beta Studio</item>
     </string-array>
-    <string-array name="followers">
+    <integer-array name="followers">
         <item>56995</item>
         <item>5153</item>
         <item>7972</item>
@@ -75,8 +86,8 @@
         <item>178</item>
         <item>428</item>
         <item>465</item>
-    </string-array>
-    <string-array name="following">
+    </integer-array>
+    <integer-array name="following">
         <item>12</item>
         <item>2</item>
         <item>0</item>
@@ -87,7 +98,7 @@
         <item>23</item>
         <item>61</item>
         <item>10</item>
-    </string-array>
+    </integer-array>
     <integer-array name="avatar">
         <item>@drawable/user1</item>
         <item>@drawable/user2</item>

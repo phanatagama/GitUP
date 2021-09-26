@@ -1,7 +1,6 @@
 package com.github.gituser
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -21,7 +20,7 @@ class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val (username, name, avatar, company, location, repository, follower, following) = listUser[position]
+        val (username, name, avatar) = listUser[position]
         Glide.with(holder.itemView.context)
             .load(avatar)
             .apply(RequestOptions().override(55, 55))
@@ -39,7 +38,5 @@ class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adap
         fun onItemClicked(data: User)
     }
 
-    inner class ListViewHolder(var binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    }
+    inner class ListViewHolder(var binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root)
 }

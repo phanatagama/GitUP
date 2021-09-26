@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,21 +10,22 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:text="@string/information"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_company"
-        android:layout_width="70dp"
-        android:text="Company"
+        android:layout_width="80dp"
+        android:text="@string/company"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_information" />
 
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_data_company"
-        android:text="data_company"
+        android:text="@string/data_company"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_information"/>
@@ -33,14 +33,14 @@
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_location"
-        android:text="Location"
+        android:text="@string/location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_data_company" />
 
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_data_location"
-        android:text="data_location"
+        android:text="@string/data_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_data_company" />
@@ -48,50 +48,49 @@
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_repository"
-        android:text="Repository"
+        android:text="@string/repository"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_data_location"/>
 
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_data_repository"
-        android:text="data_repository"
+        android:text="@string/data_repository"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_data_location" />
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_follower"
-        android:text="Follower"
+        android:text="@string/follower"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_data_repository"/>
 
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_data_follower"
-        android:text="data_follower"
+        android:text="@string/data_follower"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_data_repository" />
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_following"
-        android:text="Following"
+        android:text="@string/following"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_data_follower" />
 
     <TextView
         style="@style/TextView.TvInfo"
         android:id="@+id/tv_data_following"
-        android:text="data_following"
+        android:text="@string/data_following"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_data_follower" />
 
     <androidx.constraintlayout.widget.Guideline
+        style="@style/whWrap"
         android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="105dp" />
 

@@ -7,7 +7,6 @@ import android.content.Intent
 
 import android.os.Handler
 import android.view.WindowManager
-import com.github.gituser.databinding.ActivityMainBinding
 import com.github.gituser.databinding.ActivitySplashBinding
 
 
@@ -15,6 +14,7 @@ import com.github.gituser.databinding.ActivitySplashBinding
 @Suppress("DEPRECATION")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)

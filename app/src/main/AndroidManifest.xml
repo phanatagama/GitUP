@@ -11,7 +11,12 @@
         android:theme="@style/Theme.GitUser">
         <activity
             android:name=".DetailActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName="com.github.gituser.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.gituser.MainActivity" />
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -24,15 +29,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

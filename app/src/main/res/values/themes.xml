@@ -23,4 +23,19 @@
     <style name="TextView.TvInfo">
         <item name="android:layout_marginTop">8dp</item>
     </style>
+    <style name="Btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">36dp</item>
+        <item name="android:layout_marginEnd">36dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+    <style name="whWrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="whMatch">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 </resources>

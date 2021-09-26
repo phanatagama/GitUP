@@ -1,9 +1,9 @@
 package com.github.gituser
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.github.gituser.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -52,10 +52,16 @@ class MainActivity : AppCompatActivity() {
         val listUserAdapter = ListUserAdapter(list)
         binding.rvUser.adapter = listUserAdapter
 
-            listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
-                override fun onItemClicked(data: User) {
-//                    showSelectedUser(data)
-                }
-            })
+        listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: User) {
+                showSelectedUser(data)
+            }
+        })
+    }
+
+    private fun showSelectedUser(user: User) {
+        val moveWithDataIntent = Intent(this@MainActivity, DetailActivity::class.java)
+        moveWithDataIntent.putExtra(DetailActivity.EXTRA_USER, user)
+        startActivity(moveWithDataIntent)
     }
 }
