@@ -35,13 +35,15 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             .load(user.avatar)
             .apply(RequestOptions().override(120, 120))
             .into(binding.profile)
-        binding.tvItemName.text = user.name
-        binding.tvItemUsername.text = user.username
-        binding.include.tvDataCompany.text = user.company
-        binding.include.tvDataLocation.text = user.location
-        binding.include.tvDataRepository.text = user.repository.toString()
-        binding.include.tvDataFollower.text = user.follower.toString()
-        binding.include.tvDataFollowing.text = user.following.toString()
+        binding.apply {
+            tvItemName.text = user.name
+            tvItemUsername.text = user.username
+            include.tvDataCompany.text = user.company
+            include.tvDataLocation.text = user.location
+            include.tvDataRepository.text = user.repository.toString()
+            include.tvDataFollower.text = user.follower.toString()
+            include.tvDataFollowing.text = user.following.toString()
+        }
 
     }
 
