@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.content.Intent
 
 import android.os.Handler
+import android.os.Looper
 import android.view.WindowManager
 import com.github.gituser.databinding.ActivitySplashBinding
 
-
 @SuppressLint("CustomSplashScreen")
-@Suppress("DEPRECATION")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
 
@@ -25,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

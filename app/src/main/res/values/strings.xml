@@ -15,6 +15,8 @@
     <string name="location">Location</string>
     <string name="data_company">data_company</string>
     <string name="company">Company</string>
+    <string name="search">Search</string>
+    <string name="search_hint">Ketik Username</string>
     <string-array name="username">
         <item>JakeWharton</item>
         <item>amitshekhariitbhu</item>
