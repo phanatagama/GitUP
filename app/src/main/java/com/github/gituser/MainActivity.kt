@@ -21,14 +21,7 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val list = ArrayList<User>()
-    private val mainViewModel: MainViewModel by viewModels()
-
-//    private fun getRandomString(length: Int) : String {
-//    val charset = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz0123456789"
-//    return (1..length)
-//        .map { charset.random() }
-//        .joinToString("")
-//    }
+    private val mainViewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,11 +79,11 @@ class MainActivity : AppCompatActivity() {
 //        })
 //    }
 
-    private fun showSelectedUser(user: User) {
-        val moveWithDataIntent = Intent(this@MainActivity, DetailActivity::class.java)
-        moveWithDataIntent.putExtra(DetailActivity.EXTRA_USER, user)
-        startActivity(moveWithDataIntent)
-    }
+//    private fun showSelectedUser(user: Users) {
+//        val moveWithDataIntent = Intent(this@MainActivity, DetailActivity::class.java)
+//        moveWithDataIntent.putExtra(DetailActivity.EXTRA_USER, user)
+//        startActivity(moveWithDataIntent)
+//    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.option_menu, menu)
