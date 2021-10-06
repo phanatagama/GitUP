@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.gituser.databinding.ActivityMainBinding
 import androidx.appcompat.widget.SearchView
@@ -20,7 +21,14 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val list = ArrayList<User>()
-//    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
+
+//    private fun getRandomString(length: Int) : String {
+//    val charset = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz0123456789"
+//    return (1..length)
+//        .map { charset.random() }
+//        .joinToString("")
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +36,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.rvUser.setHasFixedSize(true)
+        mainViewModel.users.observe(this, {
+            setUsersData(it)
+        })
+        mainViewModel.isLoading.observe(this, {
+            showLoading(it)
+        })
+//        findUser(getRandomString(1))
 //        list.addAll(listUsers)
 //        showRecyclerList()
     }
@@ -90,7 +105,10 @@ class MainActivity : AppCompatActivity() {
             Gunakan method ini ketika search selesai atau OK
              */
             override fun onQueryTextSubmit(query: String): Boolean {
-                findUser(query)
+                mainViewModel.findUser(query)
+                mainViewModel.users.observe(this@MainActivity, {
+                    setUsersData(it)
+                })
                 Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
                 return true
             }
@@ -111,56 +129,56 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun findUser(query: String) {
-        showLoading(true)
-        val client = ApiConfig.getApiService().getListUsers(query)
-        client.enqueue(object : Callback<GithubResponse> {
-            override fun onResponse(
-                call: Call<GithubResponse>,
-                response: Response<GithubResponse>
-            ) {
-                showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-//                        setRestaurantData(responseBody.restaurant)
-                        setUsersData(responseBody.items)
-                    }
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
-            }
-            override fun onFailure(call: Call<GithubResponse>, t: Throwable) {
-                showLoading(false)
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-        })
-    }
-
-    private fun detailUser(username: String){
-        val client = ApiConfig.getApiService().getUser(username)
-        client.enqueue(object : Callback<GithubUser> {
-            override fun onResponse(
-                call: Call<GithubUser>,
-                response: Response<GithubUser>
-            ) {
+//    private fun findUser(query: String) {
+//        showLoading(true)
+//        val client = ApiConfig.getApiService().getListUsers(query)
+//        client.enqueue(object : Callback<GithubResponse> {
+//            override fun onResponse(
+//                call: Call<GithubResponse>,
+//                response: Response<GithubResponse>
+//            ) {
 //                showLoading(false)
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-//                        setRestaurantData(responseBody.restaurant)
-//                        responseBody
-                    }
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
-            }
-            override fun onFailure(call: Call<GithubUser>, t: Throwable) {
+//                if (response.isSuccessful) {
+//                    val responseBody = response.body()
+//                    if (responseBody != null) {
+////                        setRestaurantData(responseBody.restaurant)
+//                        setUsersData(responseBody.items)
+//                    }
+//                } else {
+//                    Log.e(TAG, "onFailure: ${response.message()}")
+//                }
+//            }
+//            override fun onFailure(call: Call<GithubResponse>, t: Throwable) {
 //                showLoading(false)
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-        })
-    }
+//                Log.e(TAG, "onFailure: ${t.message}")
+//            }
+//        })
+//    }
+//
+//    private fun detailUser(username: String){
+//        val client = ApiConfig.getApiService().getUser(username)
+//        client.enqueue(object : Callback<GithubUser> {
+//            override fun onResponse(
+//                call: Call<GithubUser>,
+//                response: Response<GithubUser>
+//            ) {
+////                showLoading(false)
+//                if (response.isSuccessful) {
+//                    val responseBody = response.body()
+//                    if (responseBody != null) {
+////                        setRestaurantData(responseBody.restaurant)
+////                        responseBody
+//                    }
+//                } else {
+//                    Log.e(TAG, "onFailure: ${response.message()}")
+//                }
+//            }
+//            override fun onFailure(call: Call<GithubUser>, t: Throwable) {
+////                showLoading(false)
+//                Log.e(TAG, "onFailure: ${t.message}")
+//            }
+//        })
+//    }
 
 //    private fun createUser(responseBody: GithubUser) {
 //        val user = User(
@@ -197,15 +215,19 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+//    private fun showLoading(isLoading: Boolean) {
+//        if (isLoading) {
+//            binding.progressBar.visibility = View.VISIBLE
+//        } else {
+//            binding.progressBar.visibility = View.GONE
+//        }
+//    }
+
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    companion object {
-        private const val TAG = "MainActivity"
-    }
+//    companion object {
+//        private const val TAG = "MainActivity"
+//    }
 }

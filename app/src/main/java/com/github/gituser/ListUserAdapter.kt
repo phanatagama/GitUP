@@ -26,7 +26,7 @@ class ListUserAdapter(private val listUser: ArrayList<Users>) : RecyclerView.Ada
             .apply(RequestOptions().override(55, 55))
             .into(holder.binding.imgItemPhoto)
         holder.binding.tvItemName.text = username
-        holder.binding.tvItemUsername.text = ""
+        holder.binding.tvItemUsername.text = username
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(listUser[holder.adapterPosition])
         }
