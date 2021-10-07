@@ -79,11 +79,11 @@ class MainActivity : AppCompatActivity() {
 //        })
 //    }
 
-//    private fun showSelectedUser(user: Users) {
-//        val moveWithDataIntent = Intent(this@MainActivity, DetailActivity::class.java)
-//        moveWithDataIntent.putExtra(DetailActivity.EXTRA_USER, user)
-//        startActivity(moveWithDataIntent)
-//    }
+    private fun showSelectedUser(user: Users) {
+        val moveWithDataIntent = Intent(this@MainActivity, DetailActivity::class.java)
+        moveWithDataIntent.putExtra(DetailActivity.EXTRA_USER, user)
+        startActivity(moveWithDataIntent)
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.option_menu, menu)
@@ -202,8 +202,8 @@ class MainActivity : AppCompatActivity() {
 
         adapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Users) {
-//                showSelectedUser(data)
-                Toast.makeText(this@MainActivity, data.username, Toast.LENGTH_SHORT).show()
+                showSelectedUser(data)
+//                Toast.makeText(this@MainActivity, data.username, Toast.LENGTH_SHORT).show()
             }
         })
     }
