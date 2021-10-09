@@ -25,21 +25,30 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.title = "Detail User"
+        supportActionBar?.title = resources.getString(R.string.detail_user)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.btnShare.setOnClickListener(this)
+        binding.btnFollow.setOnClickListener(View.OnClickListener {
+            val followIntent: Intent = Intent(this, FollowActivity::class.java).apply {
+                putExtra(FollowActivity.USERNAME, detailUser.login)
+            }
+            startActivity(followIntent)
+        })
         user = intent.getParcelableExtra<Users>(EXTRA_USER) as Users
-//        setDataUser()
-
         user.username?.let { detailViewModel.getUser(it) }
         detailViewModel.users.observe(this, {
-            detailUser = it
-            setDataUser(it)
+            it.getContentIfNotHandled()?.let { data ->
+                detailUser = data
+                setDataUser(data)
+            }
         })
         detailViewModel.isLoading.observe(this, {
-            showLoading(it)
+            it.getContentIfNotHandled()?.let { status ->
+                showLoading(status)
+            }
         })
+
     }
 
     private fun setDataUser(data: GithubUser) {
@@ -48,7 +57,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             .apply(RequestOptions().override(120, 120))
             .into(binding.profile)
         binding.apply {
-            tvItemName.text = data.name?.toString()
+            tvItemName.text = data.name.toString()
             tvItemUsername.text = data.login
             include.tvDataCompany.text = data.company
             include.tvDataLocation.text = data.location
@@ -56,7 +65,6 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             include.tvDataFollower.text = data.followers.toString()
             include.tvDataFollowing.text = data.following.toString()
         }
-
     }
 
     override fun onClick(p0: View?) {

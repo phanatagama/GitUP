@@ -33,7 +33,7 @@ class MainViewModel: ViewModel() {
                     if (responseBody != null) {
 //                        setRestaurantData(responseBody.restaurant)
 //                        setUsersData(responseBody.items)
-                        _users.value = responseBody?.items
+                        _users.value = responseBody.items
                     }
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
