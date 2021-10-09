@@ -15,7 +15,6 @@ class DetailViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Event<Boolean>>()
     val isLoading: LiveData<Event<Boolean>> = _isLoading
 
-
     fun getUser(username: String) {
         _isLoading.value = Event(true)
         val client = ApiConfig.getApiService().getUser(username)
