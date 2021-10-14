@@ -1,4 +1,4 @@
-package com.github.gituser
+package com.github.gituser.ui.main
 
 import retrofit2.Call
 import retrofit2.http.*

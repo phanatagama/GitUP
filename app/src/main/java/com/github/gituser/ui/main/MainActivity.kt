@@ -1,4 +1,4 @@
-package com.github.gituser
+package com.github.gituser.ui.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.Switch
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
@@ -21,6 +20,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.github.gituser.R
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -40,6 +40,13 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.isLoading.observe(this, {
             showLoading(it)
         })
+
+        binding?.fabAdd?.setOnClickListener { view ->
+            if (view.id == R.id.fab_add) {
+                val intent = Intent(this@MainActivity, FavoriteActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun showSelectedUser(user: Users) {

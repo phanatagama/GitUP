@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".DetailActivity">
+        tools:context=".ui.main.DetailActivity">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile"
@@ -90,11 +90,18 @@
             app:layout_constraintTop_toBottomOf="@+id/include" />
         <Button
             style="@style/Btn"
+            android:id="@+id/btn_fav"
+            android:text="@string/favorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_share" />
+        <Button
+            style="@style/Btn"
             android:id="@+id/btn_follow"
             android:text="@string/follow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_share" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_fav" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

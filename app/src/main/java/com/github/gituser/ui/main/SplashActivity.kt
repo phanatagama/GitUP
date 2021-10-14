@@ -1,4 +1,4 @@
-package com.github.gituser
+package com.github.gituser.ui.main
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity

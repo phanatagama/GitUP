@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/whMatch">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.insert.UserAddUpdateActivity">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileUser"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            style="@style/whWrap"
+            android:id="@+id/tv_item_name"
+            android:layout_below="@id/profileUser"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20sp"
+            android:text="@string/user_name"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_item_username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileUser"
+            tools:text="@string/user_name" />
+
+        <TextView
+            style="@style/whWrap"
+            android:id="@+id/tv_item_username"
+            android:layout_below="@id/tv_item_name"
+            android:layout_centerHorizontal="true"
+            android:text="@string/username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_name"
+            tools:text="@string/username" />
+
+<!--        <androidx.constraintlayout.widget.Guideline-->
+<!--            style="@style/whWrap"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:id="@+id/guideline2"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintGuide_begin="200dp" />-->
+
+<!--        <include-->
+<!--            android:id="@+id/include"-->
+<!--            layout="@layout/layout_detail"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="72dp"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/guideline2" />-->
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/progressBar"-->
+<!--            style="?android:attr/progressBarStyle"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:visibility="visible" />-->
+
+        <Button
+            style="@style/Btn"
+            android:id="@+id/btn_share"
+            android:text="@string/share"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_username" />
+<!--        <Button-->
+<!--            style="@style/Btn"-->
+<!--            android:id="@+id/btn_fav"-->
+<!--            android:text="@string/favorite"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/btn_share" />-->
+<!--        <Button-->
+<!--            style="@style/Btn"-->
+<!--            android:id="@+id/btn_follow"-->
+<!--            android:text="@string/follow"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/btn_fav" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:id="@+id/activity_form_add_update"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    android:padding="16dp"-->
+<!--    tools:context=".ui.insert.UserAddUpdateActivity">-->
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="16dp">-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/edt_title"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/username"-->
+<!--            android:inputType="textCapSentences"-->
+<!--            android:maxLines="1" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="16dp">-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/edt_description"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="description"-->
+<!--            android:inputType="textCapSentences"-->
+<!--            android:maxLines="1" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_submit"-->
+<!--        style="@style/Base.Widget.AppCompat.Button.Colored"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/submit" />-->
+<!--</LinearLayout>-->

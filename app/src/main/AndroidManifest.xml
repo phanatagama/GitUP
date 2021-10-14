@@ -12,18 +12,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GitUser">
         <activity
-            android:name=".FollowActivity"
-            android:exported="true"/>
+            android:name=".ui.insert.UserAddUpdateActivity"
+            android:exported="true" />
         <activity
-            android:name=".DetailActivity"
+            android:name=".ui.main.FavoriteActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ui.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.github.gituser.MainActivity" />
+                android:value="com.github.gituser.ui.main.MainActivity" />
         </activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.main.FollowActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.main.DetailActivity"
+            android:exported="true"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.gituser.ui.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.main.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -33,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true" />
     </application>
 

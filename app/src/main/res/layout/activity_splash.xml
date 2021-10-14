@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/whMatch"
     android:background="#fff"
-    tools:context=".SplashActivity">
+    tools:context=".ui.main.SplashActivity">
 
     <ImageView
         android:id="@+id/SplashScreenImage"

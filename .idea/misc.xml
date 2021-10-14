@@ -5,15 +5,19 @@
       <map>
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/drawable/splash_brand_logo.xml" value="0.2" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/activity_detail.xml" value="0.2" />
+        <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/activity_favorite.xml" value="0.10729166666666666" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/activity_follow.xml" value="0.1265625" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/activity_splash.xml" value="0.14356884057971014" />
+        <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/activity_user_add_update.xml" value="0.1" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/fragment_follow.xml" value="0.17753623188405798" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/fragment_following.xml" value="0.1125" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/item_row_user.xml" value="0.264" />
+        <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/item_user.xml" value="0.264" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/layout_detail.xml" value="0.4" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/layout_follow.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/layout/switch_item.xml" value="0.10729166666666666" />
+        <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/menu/menu_form.xml" value="0.10729166666666666" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/menu/option_menu.xml" value="0.2" />
         <entry key="..\:/Users/Phanatagama/AndroidStudioProjects/GitUser/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14635416666666667" />
       </map>

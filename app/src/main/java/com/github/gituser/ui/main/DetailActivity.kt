@@ -1,19 +1,27 @@
-package com.github.gituser
+package com.github.gituser.ui.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.github.gituser.Database.User
+import com.github.gituser.R
 import com.github.gituser.databinding.ActivityDetailBinding
+import com.github.gituser.helper.ViewModelFactory
+import com.github.gituser.ui.insert.UserAddUpdateViewModel
 
 
 class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var user: Users
+    private var userF: User = User()
     private lateinit var detailUser: GithubUser
+    private lateinit var userAddUpdateViewModel: UserAddUpdateViewModel
     private val detailViewModel by viewModels<DetailViewModel>()
 
     companion object {
@@ -49,6 +57,20 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
+        userAddUpdateViewModel = obtainViewModel(this@DetailActivity)
+        binding.btnFav.setOnClickListener( View.OnClickListener {
+            userF.let { userF ->
+                userF.username = user.username
+                userF.avatar = user.avatar
+            }
+            userAddUpdateViewModel.insert(userF as User)
+            Toast.makeText(this@DetailActivity, user.username, Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): UserAddUpdateViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory).get(UserAddUpdateViewModel::class.java)
     }
 
     private fun setDataUser(data: GithubUser) {

@@ -1,4 +1,4 @@
-package com.github.gituser
+package com.github.gituser.ui.main
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
