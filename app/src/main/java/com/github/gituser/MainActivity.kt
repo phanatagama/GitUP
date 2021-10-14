@@ -1,19 +1,29 @@
 package com.github.gituser
 
 import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.CompoundButton
+import android.widget.Switch
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.gituser.databinding.ActivityMainBinding
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.getSystemService
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.switchmaterial.SwitchMaterial
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
@@ -61,6 +71,41 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
+
+        val switchTheme = menu.findItem(R.id.app_bar_switch)
+        switchTheme.setActionView(R.layout.switch_item)
+        val mySwitch = switchTheme.actionView.findViewById<SwitchMaterial>(R.id.switch_theme)
+
+        val pref = SettingPreferences.getInstance(dataStore)
+        val darkViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
+            DarkViewModel::class.java
+        )
+        darkViewModel.getThemeSettings().observe(this,
+            { isDarkModeActive: Boolean ->
+                if (isDarkModeActive) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    switchTheme.isChecked = true
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    switchTheme.isChecked = false
+                }
+            })
+
+        mySwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            darkViewModel.saveThemeSetting(isChecked)
+        }
+//        val switchTheme = menu.findItem(R.id.app_bar_switch)
+//        switchTheme.setActionView(R.layout.switch_item)
+//        val mySwitch = switchTheme.actionView.findViewById<Switch>(R.id.myswicth)
+//        mySwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+//            if (isChecked) {
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//                switchTheme.isChecked = true
+//            } else {
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//                switchTheme.isChecked = false
+//            }
+//        }
         return true
     }
 

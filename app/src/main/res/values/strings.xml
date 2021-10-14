@@ -19,4 +19,5 @@
     <string name="search_hint">Ketik Username</string>
     <string name="detail_user">Detail User</string>
     <string name="follow">Follower/Following</string>
+    <string name="dark_mode">Dark</string>
 </resources>
