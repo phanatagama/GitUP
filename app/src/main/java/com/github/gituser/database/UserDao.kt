@@ -1,11 +1,11 @@
-package com.github.gituser.Database
+package com.github.gituser.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface UserDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
 
     @Update
@@ -15,5 +15,5 @@ interface UserDao {
     fun delete(user: User)
 
     @Query("SELECT * from user ORDER BY id ASC")
-    fun getAllNotes(): LiveData<List<User>>
+    fun getAllUsers(): LiveData<List<User>>
 }

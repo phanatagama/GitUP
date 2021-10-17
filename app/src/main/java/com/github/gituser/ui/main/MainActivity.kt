@@ -97,22 +97,10 @@ class MainActivity : AppCompatActivity() {
                     switchTheme.isChecked = false
                 }
             })
-
+        mySwitch.isChecked = switchTheme.isChecked
         mySwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             darkViewModel.saveThemeSetting(isChecked)
         }
-//        val switchTheme = menu.findItem(R.id.app_bar_switch)
-//        switchTheme.setActionView(R.layout.switch_item)
-//        val mySwitch = switchTheme.actionView.findViewById<Switch>(R.id.myswicth)
-//        mySwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-//            if (isChecked) {
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//                switchTheme.isChecked = true
-//            } else {
-//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//                switchTheme.isChecked = false
-//            }
-//        }
         return true
     }
 

@@ -31,8 +31,6 @@ class MainViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
-//                        setRestaurantData(responseBody.restaurant)
-//                        setUsersData(responseBody.items)
                         _users.value = responseBody.items
                     }
                 } else {

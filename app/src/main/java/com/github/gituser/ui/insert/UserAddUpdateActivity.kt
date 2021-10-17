@@ -1,5 +1,6 @@
 package com.github.gituser.ui.insert
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -9,30 +10,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.github.gituser.Database.User
+import com.github.gituser.database.User
 import com.github.gituser.R
 import com.github.gituser.databinding.ActivityUserAddUpdateBinding
 import com.github.gituser.helper.ViewModelFactory
-
-//class UserAddUpdateActivity : AppCompatActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_user_add_update)
-//    }
-//}
+import com.github.gituser.ui.main.FollowActivity
 
 class UserAddUpdateActivity : AppCompatActivity() {
-
-    companion object {
-        const val EXTRA_USER = "extra_user"
-        const val ALERT_DIALOG_CLOSE = 10
-        const val ALERT_DIALOG_DELETE = 20
-    }
-
-    private var isEdit = false
     private var user: User? = null
     private lateinit var userAddUpdateViewModel: UserAddUpdateViewModel
-
     private var _activityUserAddUpdateBinding: ActivityUserAddUpdateBinding? = null
     private val binding get() = _activityUserAddUpdateBinding
 
@@ -45,66 +31,48 @@ class UserAddUpdateActivity : AppCompatActivity() {
         userAddUpdateViewModel = obtainViewModel(this@UserAddUpdateActivity)
 
         user = intent.getParcelableExtra(EXTRA_USER)
-        if (user != null) {
-            isEdit = true
-        } else {
-            user = User()
-        }
-
-        val actionBarTitle: String
-        val btnTitle: String
-
-        if (isEdit) {
-            actionBarTitle = getString(R.string.detail_user)
-            btnTitle = getString(R.string.remove_favorite)
-            if (user != null) {
-                user?.let { user ->
-                    Glide.with(this)
-                        .load(user.avatar)
-                        .apply(RequestOptions().override(120, 120))
-                        .into(binding?.profileUser!!)
-                    binding?.tvItemName?.setText(user.username)
-                    binding?.tvItemUsername?.setText(user.username)
-                }
+        user?.let { user ->
+            Glide.with(this)
+                .load(user.avatar)
+                .apply(RequestOptions().override(120, 120))
+                .into(binding?.profileUser!!)
+            binding?.apply {
+                tvItemName?.setText(user.name)
+                tvItemUsername?.setText(user.username)
+                include.tvDataCompany.text = user.company
+                include.tvDataLocation.text = user.location
+                include.tvDataRepository.text = user.repository.toString()
+                include.tvDataFollower.text = user.followers.toString()
+                include.tvDataFollowing.text = user.following.toString()
             }
-        } else {
-            actionBarTitle = getString(R.string.detail_user)
-            btnTitle = getString(R.string.remove_favorite)
         }
 
-        supportActionBar?.title = actionBarTitle
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = user?.username
 
-//        binding?.btnSubmit?.text = btnTitle
-//        binding?.btnSubmit?.setOnClickListener {
-//            val title = binding?.edtTitle?.text.toString().trim()
-//            val description = binding?.edtDescription?.text.toString().trim()
-//            when {
-//                title.isEmpty() -> {
-//                    binding?.edtTitle?.error = getString(R.string.empty)
-//                }
-//                description.isEmpty() -> {
-//                    binding?.edtDescription?.error = getString(R.string.empty)
-//                }
-//                else -> {
-//                    user.let { user ->
-//                        user?.username = title
-//                        user?.avatar = description
-//                    }
-//                    if (isEdit) {
-//                        userAddUpdateViewModel.update(user as User)
-//                        showToast(getString(R.string.changed))
-//                    } else {
-////                        note.let { note ->
-////                            note?.date = DateHelper.getCurrentDate()
-////                        }
-//                        userAddUpdateViewModel.insert(user as User)
-//                        showToast(getString(R.string.added))
-//                    }
-//                    finish()
-//                }
-//            }
-//        }
+        binding?.btnShare?.setOnClickListener {
+            val shareIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(
+                    Intent.EXTRA_TEXT, """
+                Name: ${user?.name}
+                Username: ${user?.username}
+                Company: ${user?.company}
+                Location: ${user?.location}
+                Repository: ${user?.repository}
+                Follower: ${user?.followers}
+                Following: ${user?.following}
+            """.trimIndent())
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share user to.."))
+        }
+
+        binding?.btnFollow?.setOnClickListener{
+            val followIntent: Intent = Intent(this, FollowActivity::class.java).apply {
+                putExtra(FollowActivity.USERNAME, user?.username)
+            }
+            startActivity(followIntent)
+        }
     }
 
     private fun showToast(message: String) {
@@ -112,45 +80,28 @@ class UserAddUpdateActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        if (isEdit) {
-            menuInflater.inflate(R.menu.menu_form, menu)
-        }
+        menuInflater.inflate(R.menu.menu_form, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_delete -> showAlertDialog(ALERT_DIALOG_DELETE)
-            android.R.id.home -> showAlertDialog(ALERT_DIALOG_CLOSE)
+            R.id.action_delete -> showAlertDialog()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        showAlertDialog(ALERT_DIALOG_CLOSE)
-    }
-
-    private fun showAlertDialog(type: Int) {
-        val isDialogClose = type == ALERT_DIALOG_CLOSE
-        val dialogTitle: String
-        val dialogMessage: String
-        if (isDialogClose) {
-            dialogTitle = getString(R.string.cancel)
-            dialogMessage = getString(R.string.message_cancel)
-        } else {
-            dialogMessage = getString(R.string.message_delete)
-            dialogTitle = getString(R.string.delete)
-        }
+    private fun showAlertDialog() {
+        val dialogTitle: String = getString(R.string.delete)
+        val dialogMessage: String = getString(R.string.message_delete)
         val alertDialogBuilder = AlertDialog.Builder(this)
         with(alertDialogBuilder) {
             setTitle(dialogTitle)
             setMessage(dialogMessage)
             setCancelable(false)
             setPositiveButton(getString(R.string.yes)) { _, _ ->
-                if (!isDialogClose) {
-                    userAddUpdateViewModel.delete(user as User)
-                    showToast(getString(R.string.deleted))
-                }
+                userAddUpdateViewModel.delete(user as User)
+                showToast(getString(R.string.deleted))
                 finish()
             }
             setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.cancel() }
@@ -167,5 +118,9 @@ class UserAddUpdateActivity : AppCompatActivity() {
     private fun obtainViewModel(activity: AppCompatActivity): UserAddUpdateViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory).get(UserAddUpdateViewModel::class.java)
+    }
+
+    companion object {
+        const val EXTRA_USER = "extra_user"
     }
 }

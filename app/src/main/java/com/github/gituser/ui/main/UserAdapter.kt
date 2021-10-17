@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.github.gituser.Database.User
+import com.github.gituser.database.User
 import com.github.gituser.databinding.ItemUserBinding
 import com.github.gituser.helper.UserDiffCallback
 
@@ -29,6 +29,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         val binding = ItemUserBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
         return UserViewHolder(binding)
     }
+
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val (id, username, avatar) = listUsers[position]
         Glide.with(holder.itemView.context)
@@ -41,23 +42,12 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
             onItemClickCallback.onItemClicked(listUsers[holder.adapterPosition])
         }
     }
+
     override fun getItemCount(): Int {
         return listUsers.size
     }
-    inner class UserViewHolder(var binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
-//        fun bind(user: User) {
-//            with(binding) {
-//                tvItemTitle.text = user.username
-//                tvItemDate.text = user.date
-//                tvItemDescription.text = user.description
-//                cvItemNote.setOnClickListener {
-//                    val intent = Intent(it.context, UserAddUpdateActivity::class.java)
-//                    intent.putExtra(UserAddUpdateActivity.EXTRA_NOTE, user)
-//                    it.context.startActivity(intent)
-//                }
-//            }
-//        }
-    }
+
+    inner class UserViewHolder(var binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root)
 
     interface OnItemClickCallback {
         fun onItemClicked(data: User)

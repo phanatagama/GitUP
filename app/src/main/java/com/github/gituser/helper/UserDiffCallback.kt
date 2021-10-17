@@ -1,7 +1,7 @@
 package com.github.gituser.helper
 
 import androidx.recyclerview.widget.DiffUtil
-import com.github.gituser.Database.User
+import com.github.gituser.database.User
 
 class UserDiffCallback(private val mOldUserList: List<User>, private val mNewUserList: List<User>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {

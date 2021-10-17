@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.github.gituser.Database.User
+import com.github.gituser.database.User
 import com.github.gituser.R
 import com.github.gituser.databinding.ActivityDetailBinding
 import com.github.gituser.helper.ViewModelFactory
@@ -23,10 +23,6 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var detailUser: GithubUser
     private lateinit var userAddUpdateViewModel: UserAddUpdateViewModel
     private val detailViewModel by viewModels<DetailViewModel>()
-
-    companion object {
-        const val EXTRA_USER = "extra_user"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +56,17 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         userAddUpdateViewModel = obtainViewModel(this@DetailActivity)
         binding.btnFav.setOnClickListener( View.OnClickListener {
             userF.let { userF ->
-                userF.username = user.username
-                userF.avatar = user.avatar
+                userF.username = detailUser.login
+                userF.avatar = detailUser.avatarUrl
+                userF.name = detailUser.name.toString()
+                userF.company = detailUser.company
+                userF.location = detailUser.location
+                userF.repository = detailUser.publicRepos
+                userF.followers = detailUser.followers
+                userF.following = detailUser.following
             }
             userAddUpdateViewModel.insert(userF as User)
-            Toast.makeText(this@DetailActivity, user.username, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@DetailActivity, "Favorite ${user.username}", Toast.LENGTH_SHORT).show()
         })
     }
 
@@ -108,5 +110,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        const val EXTRA_USER = "extra_user"
     }
 }

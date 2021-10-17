@@ -5,18 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.gituser.Database.User
+import com.github.gituser.database.User
 import com.github.gituser.R
 import com.github.gituser.databinding.ActivityFavoriteBinding
 import com.github.gituser.helper.ViewModelFactory
 import com.github.gituser.ui.insert.UserAddUpdateActivity
 
 class FavoriteActivity : AppCompatActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_favorite)
-//    }
-private var _activityFavoriteBinding: ActivityFavoriteBinding? = null
+    private var _activityFavoriteBinding: ActivityFavoriteBinding? = null
     private val binding get() = _activityFavoriteBinding
     private lateinit var adapter: UserAdapter
 
