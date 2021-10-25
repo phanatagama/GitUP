@@ -14,7 +14,7 @@ android {
         targetSdk 31
         versionCode 3
         versionName "3.0"
-        buildConfigField("String", "KEY", '"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"')
+        buildConfigField("String", "KEY", '"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"')
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

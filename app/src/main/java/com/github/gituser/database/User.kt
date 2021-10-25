@@ -15,26 +15,26 @@ data class User(
     var id: Int = 0,
 
     @ColumnInfo(name = "username")
-    var username: String? = null,
+    var username: String? = "",
 
     @ColumnInfo(name = "avatar")
-    var avatar: String? = null,
+    var avatar: String? = "",
 
     @ColumnInfo(name = "name")
-    var name: String? = null,
+    var name: String? = "",
 
     @ColumnInfo(name ="company")
-    var company: String? = null,
+    var company: String? = "",
 
     @ColumnInfo(name = "location")
-    var location: String? = null,
+    var location: String? = "",
 
     @ColumnInfo(name = "repository")
-    var repository: Int? = null,
+    var repository: Int? = 0,
 
     @ColumnInfo(name = "followers")
-    var followers: Int? = null,
+    var followers: Int? = 0,
 
     @ColumnInfo(name = "following")
-    var following: Int? = null
+    var following: Int? = 0
 ) : Parcelable

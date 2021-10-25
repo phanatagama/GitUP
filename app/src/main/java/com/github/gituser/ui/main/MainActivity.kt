@@ -92,12 +92,14 @@ class MainActivity : AppCompatActivity() {
                 if (isDarkModeActive) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     switchTheme.isChecked = true
+                    mySwitch.isChecked = true
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     switchTheme.isChecked = false
+                    mySwitch.isChecked = false
                 }
+
             })
-        mySwitch.isChecked = switchTheme.isChecked
         mySwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             darkViewModel.saveThemeSetting(isChecked)
         }

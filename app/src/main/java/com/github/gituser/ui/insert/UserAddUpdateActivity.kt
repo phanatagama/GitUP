@@ -36,14 +36,19 @@ class UserAddUpdateActivity : AppCompatActivity() {
                 .load(user.avatar)
                 .apply(RequestOptions().override(120, 120))
                 .into(binding?.profileUser!!)
+            if (user.name != null) {
+
+            } else {
+                binding?.tvItemName?.setText(user.username)
+            }
             binding?.apply {
-                tvItemName?.setText(user.name)
                 tvItemUsername?.setText(user.username)
-                include.tvDataCompany.text = user.company
-                include.tvDataLocation.text = user.location
-                include.tvDataRepository.text = user.repository.toString()
-                include.tvDataFollower.text = user.followers.toString()
-                include.tvDataFollowing.text = user.following.toString()
+                binding?.tvItemName?.setText(user.name) ?: ""
+                include.tvDataCompany.text = user.company ?: ""
+                include.tvDataLocation.text = user.location ?: ""
+                include.tvDataRepository.text = user.repository.toString() ?: ""
+                include.tvDataFollower.text = user.followers.toString() ?: ""
+                include.tvDataFollowing.text = user.following.toString() ?: ""
             }
         }
 
