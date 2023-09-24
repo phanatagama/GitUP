@@ -1,9 +1,9 @@
 package com.github.gituser.helper
 
 import androidx.recyclerview.widget.DiffUtil
-import com.github.gituser.database.User
+import com.github.gituser.domain.user.entity.UserDetailEntity
 
-class UserDiffCallback(private val mOldUserList: List<User>, private val mNewUserList: List<User>) : DiffUtil.Callback() {
+class UserDiffCallback(private val mOldUserList: List<UserDetailEntity>, private val mNewUserList: List<UserDetailEntity>) : DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return mOldUserList.size
     }
@@ -13,7 +13,7 @@ class UserDiffCallback(private val mOldUserList: List<User>, private val mNewUse
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return mOldUserList[oldItemPosition].id == mNewUserList[newItemPosition].id
+        return mOldUserList[oldItemPosition].username == mNewUserList[newItemPosition].username
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
