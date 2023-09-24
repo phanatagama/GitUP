@@ -1,4 +1,4 @@
-package com.github.gituser.ui.main
+//package com.github.gituser.ui.main
 
 import com.google.gson.annotations.SerializedName
 
