@@ -1,7 +1,6 @@
 package com.github.gituser.ui.main
 
 import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,32 +15,47 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.gituser.databinding.ActivityMainBinding
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.getSystemService
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.github.gituser.R
+import com.github.gituser.domain.user.entity.UserEntity
+import com.github.gituser.ui.common.SettingPreferences
+import com.github.gituser.ui.common.showToast
+import com.github.gituser.ui.main.detail.DetailActivity
+import com.github.gituser.ui.main.favorite.FavoriteActivity
 import com.google.android.material.switchmaterial.SwitchMaterial
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+//private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = BuildConfig.USER_PREFERENCE)
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
+//    private val darkViewModel by viewModels<DarkViewModel>()
+//    @Inject lateinit var pref: SettingPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupRecyclerView()
+        observe()
 
-        binding.rvUser.setHasFixedSize(true)
-        mainViewModel.users.observe(this, {
-            setUsersData(it)
-        })
-        mainViewModel.isLoading.observe(this, {
-            showLoading(it)
-        })
+//        mainViewModel.users.observe(this, {
+//            setUsersData(it)
+//        })
+//        mainViewModel.isLoading.observe(this, {
+//            showLoading(it)
+//        })
 
-        binding?.fabAdd?.setOnClickListener { view ->
+        binding.fabAdd.setOnClickListener { view ->
             if (view.id == R.id.fab_add) {
                 val intent = Intent(this@MainActivity, FavoriteActivity::class.java)
                 startActivity(intent)
@@ -49,11 +63,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSelectedUser(user: Users) {
+    private fun observe() {
+        mainViewModel.state.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).onEach {
+            state -> handleStateChanges(state)
+        }.launchIn(lifecycleScope)
+    }
+
+    private fun handleStateChanges(state: MainActivityState) {
+        when(state){
+            is MainActivityState.Init -> Unit
+            is MainActivityState.IsSuccess -> handleSuccess(state.userEntity)
+            is MainActivityState.IsLoading -> handleLoading(state.isLoading)
+            is MainActivityState.IsError -> handleError(state.message)
+        }
+
+    }
+
+    private fun handleError(message: String) {
+        return showToast(message)
+    }
+
+    private fun showSelectedUser(user: UserEntity) {
         val moveWithDataIntent = Intent(this@MainActivity, DetailActivity::class.java)
         moveWithDataIntent.putExtra(DetailActivity.EXTRA_USER, user)
         startActivity(moveWithDataIntent)
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.option_menu, menu)
@@ -66,10 +101,10 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                mainViewModel.findUser(query)
-                mainViewModel.users.observe(this@MainActivity, {
-                    setUsersData(it)
-                })
+                mainViewModel.getUsersByQuery(query)
+//                mainViewModel.users.observe(this@MainActivity, {
+//                    setUsersData(it)
+//                })
                 Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
                 return true
             }
@@ -83,11 +118,11 @@ class MainActivity : AppCompatActivity() {
         switchTheme.setActionView(R.layout.switch_item)
         val mySwitch = switchTheme.actionView.findViewById<SwitchMaterial>(R.id.switch_theme)
 
-        val pref = SettingPreferences.getInstance(dataStore)
-        val darkViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
-            DarkViewModel::class.java
-        )
-        darkViewModel.getThemeSettings().observe(this,
+//        val pref = SettingPreferences.getInstance(dataStore)
+//        val darkViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
+//            DarkViewModel::class.java
+//        )
+        mainViewModel.getThemeSettings().observe(this,
             { isDarkModeActive: Boolean ->
                 if (isDarkModeActive) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -101,7 +136,7 @@ class MainActivity : AppCompatActivity() {
 
             })
         mySwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            darkViewModel.saveThemeSetting(isChecked)
+            mainViewModel.saveThemeSetting(isChecked)
         }
         return true
     }
@@ -112,27 +147,39 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUsersData(listItems: List<ItemsItem>) {
-        val listUsers = ArrayList<Users>()
-        for (item in listItems) {
-            val user = Users(
-                item.login,
-                item.avatarUrl
-            )
-            listUsers.add(user)
-        }
-        binding.rvUser.layoutManager = LinearLayoutManager(this)
-        val adapter = ListUserAdapter(listUsers)
-        binding.rvUser.adapter = adapter
-
+    private fun setupRecyclerView(){
+        val adapter = ListUserAdapter(mutableListOf())
         adapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Users) {
+            override fun onItemClicked(data: UserEntity) {
                 showSelectedUser(data)
             }
         })
+        with(binding){
+            rvUser.adapter = adapter
+            rvUser.layoutManager = LinearLayoutManager(this@MainActivity)
+            rvUser.setHasFixedSize(true)
+        }
     }
 
-    private fun showLoading(isLoading: Boolean) {
+    private fun handleSuccess(listUsers: List<UserEntity>) {
+//        val listUsers = ArrayList<UserEntity>()
+//        for (item in listItems) {
+//            val user = UserEntity(
+//                item.login,
+//                item.avatarUrl
+//            )
+//            listUsers.add(user)
+//        }
+
+        binding.rvUser.adapter?.let { adapter ->
+            if (adapter is ListUserAdapter){
+                adapter.updateList(listUsers)
+            }
+        }
+
+    }
+
+    private fun handleLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
