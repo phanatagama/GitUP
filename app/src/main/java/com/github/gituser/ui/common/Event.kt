@@ -1,4 +1,4 @@
-package com.github.gituser.ui.main
+package com.github.gituser.ui.common
 
 open class Event<out T>(private val content: T) {
 
