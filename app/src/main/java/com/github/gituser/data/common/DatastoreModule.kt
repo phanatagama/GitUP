@@ -21,7 +21,6 @@ object DatastoreModule {
     @Provides
     fun provideDatastore(@ApplicationContext context: Context) : DataStore<Preferences> {
         return PreferenceDataStoreFactory.create (produceFile = {context.preferencesDataStoreFile(BuildConfig.USER_PREFERENCE)})
-//        return SettingPreferences(context.preferencesDataStoreFile(BuildConfig.USER_PREFERENCES))
     }
 
     @Singleton

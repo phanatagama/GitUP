@@ -1,0 +1,89 @@
+name: CD to test
+on:
+  push:
+    branches:
+      - dev-new-architecture
+jobs:
+  unit_tests:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Unit tests
+        run: ./gradlew test
+
+  # android_tests:
+  #   runs-on: [ macos-latest ]
+
+  #   env:
+  #     GRADLE_OPTS: -Dorg.gradle.jvmargs="-XX:MaxMetaspaceSize=1g"
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Set up JDK 11
+  #       uses: actions/setup-java@v2
+  #       with:
+  #         distribution: 'temurin'
+  #         java-version: 11
+  #         cache: 'gradle'
+  #     - name: Make gradlew executable
+  #       run: chmod +x ./gradlew
+  #     - name: Run connected tests
+  #       uses: ReactiveCircus/android-emulator-runner@v2
+  #       with:
+  #         api-level: 30
+  #         target: google_apis
+  #         arch: x86_64
+  #         script: ./gradlew connectedCheck
+  publish:
+    name: CD - Test -run ktlint, unit tests for Android. Finally upload the apk
+    needs: [ unit_tests ]
+    runs-on: ubuntu-latest
+    steps:
+      # 1 Checkout and setup gradle
+      - name: Checkout code
+        uses: actions/checkout@v3.1.0
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'gradle'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      # 2 Generate AAB
+      - name: Build Release AAB
+        run: ./gradlew :app:assembleDemoRelease
+      # 3 Sign AAB
+      - name: Sign AAB
+        uses: r0adkll/sign-android-release@v1
+        # ID used to access action output
+        id: sign_app
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.KEY_SIGNBASE64 }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      # 4 Upload artifact build output
+      - uses: actions/upload-artifact@master
+        with:
+          name: AABs
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+      # 5 Upload artifact
+      - uses: actions/upload-artifact@master
+        with:
+          name: mapping.txt
+          path: app/build/outputs/mapping/release/mapping.txt
+      # 6 Create Github Release
+      - name: Push AAB to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "app/build/outputs/bundle/release/*.aab"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: main
+          tag: v1.0.${{ github.run_number }}
