@@ -1,8 +1,10 @@
-package com.github.gituser.ui.main
+package com.github.gituser.ui.main.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.github.gituser.ui.main.detail.FollowFragment
+import com.github.gituser.ui.main.detail.FollowingFragment
 
 class SectionsPagerAdapter(activity: AppCompatActivity,
                            private val username: String
@@ -20,4 +22,5 @@ class SectionsPagerAdapter(activity: AppCompatActivity,
     override fun getItemCount(): Int {
         return 2
     }
+
 }
