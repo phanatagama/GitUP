@@ -10,4 +10,15 @@
     <color name="black_700">#0d1117</color>
     <color name="black_500">#161b22</color>
     <color name="black_200">#21262d</color>
+    <color name="primary">#24292f</color>
+<!--    Custom color-->
+    <color name="red">#E91E63</color>
+<!--    light theme color-->
+    <color name="light_primary">#000000</color>
+    <color name="light_on_primary">#FFFFFF</color>
+    <color name="light_secondary">#24292f</color>
+<!--    dark theme-->
+    <color name="dark_primary">#FFFFFF</color>
+    <color name="dark_on_primary">#000000</color>
+    <color name="dark_secondary">#24292f</color>
 </resources>
