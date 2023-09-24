@@ -1,4 +1,8 @@
 buildscript {
+    // dagger hilt
+    ext.dagger_hilt_version = "2.37"
+
+
     repositories {
         google()
         mavenCentral()
@@ -6,9 +10,15 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$dagger_hilt_version"
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
