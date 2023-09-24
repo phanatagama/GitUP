@@ -1,4 +1,4 @@
-package com.github.gituser.database
+package com.github.gituser.domain.user.entity
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
@@ -7,15 +7,16 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
-@Entity( indices = [Index(value = ["username"], unique = true)])
+@Entity(tableName = "user", indices = [Index(value = ["username"], unique = true)])
 @Parcelize
-data class User(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int = 0,
+data class UserDetailEntity(
+//    @PrimaryKey(autoGenerate = true)
+//    @ColumnInfo(name = "id")
+//    var id: Int = 0,
 
+    @PrimaryKey
     @ColumnInfo(name = "username")
-    var username: String? = "",
+    var username: String,
 
     @ColumnInfo(name = "avatar")
     var avatar: String? = "",
@@ -24,10 +25,10 @@ data class User(
     var name: String? = "",
 
     @ColumnInfo(name ="company")
-    var company: String? = "",
+    var company: String? = "-",
 
     @ColumnInfo(name = "location")
-    var location: String? = "",
+    var location: String? = "-",
 
     @ColumnInfo(name = "repository")
     var repository: Int? = 0,
@@ -36,5 +37,8 @@ data class User(
     var followers: Int? = 0,
 
     @ColumnInfo(name = "following")
-    var following: Int? = 0
+    var following: Int? = 0,
+
+    @ColumnInfo(name = "favorite")
+    var isFavorite: Boolean? = false
 ) : Parcelable
