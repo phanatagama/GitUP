@@ -1,47 +1,63 @@
 package com.github.gituser.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.github.gituser.domain.common.base.BaseResult
+import com.github.gituser.domain.user.entity.UserEntity
+import com.github.gituser.domain.user.usecase.GetUsersByQueryUsecase
+import com.github.gituser.ui.common.SettingPreferences
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel: ViewModel() {
-    private val _users = MutableLiveData<List<ItemsItem>>()
-    val users: LiveData<List<ItemsItem>> = _users
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    init {
-        findUser(getRandomString(1))
+@HiltViewModel
+class MainViewModel @Inject constructor(private val getUsersByQueryUsecase: GetUsersByQueryUsecase, private val pref: SettingPreferences): ViewModel() {
+    private  val _state = MutableStateFlow<MainActivityState>(MainActivityState.Init)
+    val state: StateFlow<MainActivityState> get() =_state
+    private fun setLoading(){
+        _state.value = MainActivityState.IsLoading(true)
     }
 
-    fun findUser(query: String) {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getListUsers(query)
-        client.enqueue(object : Callback<GithubResponse> {
-            override fun onResponse(
-                call: Call<GithubResponse>,
-                response: Response<GithubResponse>
-            ) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        _users.value = responseBody.items
-                    }
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+    private fun hideLoading(){
+        _state.value = MainActivityState.IsLoading(false)
+    }
+
+    private fun setError(message: String){
+        _state.value = MainActivityState.IsError(message)
+    }
+
+    init {
+        getUsersByQuery(getRandomString(1))
+    }
+
+    fun getUsersByQuery(q:String){
+        viewModelScope.launch {
+            getUsersByQueryUsecase.invoke(q).onStart {
+                setLoading()
+            }.catch { exception ->
+                hideLoading()
+                setError(exception.message.toString())
+            }.collect{ baseResult ->
+                hideLoading()
+                when(baseResult){
+                    is BaseResult.Error -> setError(baseResult.err.message)
+                    is BaseResult.Success -> _state.value = MainActivityState.IsSuccess(baseResult.data)
                 }
             }
-            override fun onFailure(call: Call<GithubResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-        })
+        }
+    }
+
+    fun getThemeSettings(): LiveData<Boolean> {
+        return pref.getThemeSetting().asLiveData()
+    }
+
+    fun saveThemeSetting(isDarkModeActive: Boolean) {
+        viewModelScope.launch {
+            pref.saveThemeSetting(isDarkModeActive)
+        }
     }
 
     private fun getRandomString(length: Int) : String {
@@ -54,4 +70,11 @@ class MainViewModel: ViewModel() {
     companion object {
         private const val TAG = "MainActivity"
     }
+}
+
+sealed class MainActivityState  {
+    object Init : MainActivityState()
+    data class IsLoading(val isLoading: Boolean) : MainActivityState()
+    data class IsError(val message: String) : MainActivityState()
+    data class IsSuccess(val userEntity: List<UserEntity>) : MainActivityState()
 }
