@@ -10,8 +10,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Make gradlew executable
         run: chmod +x ./gradlew
+      - name: Gradle clean
+        run: ./gradlew clean
       - name: Unit tests
-        run: ./gradlew test
+        run: ./gradlew test --warning-mode=all
 
   # android_tests:
   #   runs-on: [ macos-latest ]
@@ -57,7 +59,7 @@ jobs:
 
       # 2 Generate AAB
       - name: Build Release AAB
-        run: ./gradlew :app:assembleDemoRelease
+        run: ./gradlew :app:assembleDemoRelease --stacktrace --warning-mode=all
       # 3 Sign AAB
       - name: Sign AAB
         uses: r0adkll/sign-android-release@v1

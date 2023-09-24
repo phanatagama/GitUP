@@ -1,4 +1,4 @@
-![GitUP](https://socialify.git.ci/phanatagama/GitUP/image?description=1&font=Bitter&forks=1&issues=1&logo=https%3A%2F%2Fsvgshare.com%2Fi%2Fxr4.svg&pattern=Formal%20Invitation&pulls=1&stargazers=1&theme=Auto)
+![GitUP](https://socialify.git.ci/phanatagama/GitUP/image?description=1&font=KoHo&forks=1&issues=1&pattern=Overlapping%20Hexagons&pulls=1&stargazers=1&theme=Auto)
 <p align="center">
 <img src="https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white" />
 <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />
@@ -8,7 +8,7 @@
 <img src="https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=whitehttps://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white" />
   </p>
   <p align="center">
-    GitUP merupakan aplikasi pencarian informasi pengguna github berbasis android
+    GitUP is an android-based github user information search application
     <br />
     <a href="https://github.com/phanatagama/GitUP/releases/download/v.1.0.0-beta/GitUP-App-Beta.apk">Download App</a>
     ·
@@ -18,22 +18,20 @@
   </p>
 
 ## 💡 Background
-The manga industry has experienced rapid growth in recent decades. From a uniquely Japanese art and entertainment form, manga has expanded worldwide, reaching a diverse audience of readers of all ages. Manga works are no longer limited to a particular genre or theme, but rather cover everything from epic adventures, romantic stories, to science and fantastical themes. The uniqueness in narrative and visual art has made manga a global phenomenon that has captured the attention of many.
-
-This app is designed to provide the fastest and most comprehensive access to the world of manga. Users can easily search read synopses, and explore the constantly updated collection. The app is the perfect platform for manga fans, both long-time followers and those just starting out in the infinite world of manga.
+Github is a version control system that is quite popular among developers. Each developer has a unique project repository and has several followers in their account. To get detailed information about github accounts, users can use this application and add favourite developers to the favourite list and store them on local storage.
 
 ## ♻️ Project Goals
-This application was created to complete the submission [Fundamental Aplikasi Android](https://www.dicoding.com/academies/51)
+This application was created to complete the submission [Fundamental Aplikasi Android](https://www.dicoding.com/academies/14)
 
 ## 🤯 Challenges we faced
-Aplikasi ini dibangun dengan Android Architecture Component seperti Kotlin Flow, Coroutiones dan lain-lain. Room digunakan sebagai penyimpanan lokal untuk data favorite pengguna dan Dagger-Hilt dipakai untuk sebagai injeksi dependensi
+This application is built with Android Architecture Components such as Kotlin Flow, Coroutiones and others. Room is used as local storage for user favourite data and Dagger-Hilt is used for dependency injection.
 
 ## 🧐 How we built our project
 GitUP is a mobile application built with Kotlin programming. Data sources are hardcoded in Kotlin classes according to the terms and conditions of the submission.
 
 ## 🛠️ Tech Stack Used
 | Kotlin      | Android Studio      | Git      | Github      | Figma      |
-|------------|-------------|-------------|-------------|-------------|-------------|
+|------------|-------------|-------------|-------------|-------------|
 | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin_Icon.png/1024px-Kotlin_Icon.png" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Android_Studio_Icon_%282014-2019%29.svg/1200px-Android_Studio_Icon_%282014-2019%29.svg.png" width="150"> | <img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" width="150"> | <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" width="150"> |
 
 <!-- ### Extra Library -->
