@@ -1,4 +1,4 @@
-package com.github.gituser.ui.main
+package com.github.gituser.ui.common
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -6,8 +6,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class SettingPreferences private constructor(private val dataStore: DataStore<Preferences>) {
+class SettingPreferences constructor(private val dataStore: DataStore<Preferences>) {
     private val THEME_KEY = booleanPreferencesKey("theme_setting")
 
     fun getThemeSetting(): Flow<Boolean> {
@@ -22,16 +23,16 @@ class SettingPreferences private constructor(private val dataStore: DataStore<Pr
         }
     }
 
-    companion object {
-        @Volatile
-        private var INSTANCE: SettingPreferences? = null
-
-        fun getInstance(dataStore: DataStore<Preferences>): SettingPreferences {
-            return INSTANCE ?: synchronized(this) {
-                val instance = SettingPreferences(dataStore)
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
+//    companion object {
+//        @Volatile
+//        private var INSTANCE: SettingPreferences? = null
+//
+//        fun getInstance(dataStore: DataStore<Preferences>): SettingPreferences {
+//            return INSTANCE ?: synchronized(this) {
+//                val instance = SettingPreferences(dataStore)
+//                INSTANCE = instance
+//                instance
+//            }
+//        }
+//    }
 }
