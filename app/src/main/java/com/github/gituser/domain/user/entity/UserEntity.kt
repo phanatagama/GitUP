@@ -1,10 +1,10 @@
-package com.github.gituser.ui.main
+package com.github.gituser.domain.user.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Users(
+data class UserEntity(
     val username: String?,
     val avatar: String?
 ) : Parcelable
