@@ -1,7 +1,7 @@
 package com.github.gituser.domain.user.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.github.core.data.user.local.entity.UserDetailEntity
+import com.github.core.domain.user.model.UserDetail
 import com.github.core.domain.user.repository.UserRepository
 import com.github.core.domain.user.usecase.InsertUserUsecase
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -44,24 +44,24 @@ class InsertUserUsecaseTest{
     @Test
     fun `should emit Unit when call is successfully` () = runTest {
         val username ="John Doe"
-        val userDetailEntity = UserDetailEntity(username)
+        val userDetail = UserDetail(username)
         val baseResultSuccess = com.github.core.domain.common.base.BaseResult.Success(Unit)
 
         // arrange
-        Mockito.`when`(userRepository.insertUser(userDetailEntity)).thenReturn(baseResultSuccess)
+        Mockito.`when`(userRepository.insertUser(userDetail)).thenReturn(baseResultSuccess)
 
         // act
-        val result = insertUserUsecase.invoke(userDetailEntity)
+        val result = insertUserUsecase.invoke(userDetail)
 
         // assert
-        Mockito.verify(userRepository).insertUser(userDetailEntity)
+        Mockito.verify(userRepository).insertUser(userDetail)
         assertEquals(baseResultSuccess, result)
     }
 
     @Test
     fun `should emit Failure when call is unsuccessfully` () = runTest {
         val username ="John Doe"
-        val userDetailEntity = UserDetailEntity(username)
+        val userDetail = UserDetail(username)
         val baseResultError = com.github.core.domain.common.base.BaseResult.Error(
             com.github.core.domain.common.base.Failure(
                 -1,
@@ -70,13 +70,13 @@ class InsertUserUsecaseTest{
         )
 
         // arrange
-        Mockito.`when`(userRepository.insertUser(userDetailEntity)).thenReturn(baseResultError)
+        Mockito.`when`(userRepository.insertUser(userDetail)).thenReturn(baseResultError)
 
         // act
-        val result = insertUserUsecase.invoke(userDetailEntity)
+        val result = insertUserUsecase.invoke(userDetail)
 
         // assert
-        Mockito.verify(userRepository).insertUser(userDetailEntity)
+        Mockito.verify(userRepository).insertUser(userDetail)
         assertEquals(baseResultError, result)
     }
 }

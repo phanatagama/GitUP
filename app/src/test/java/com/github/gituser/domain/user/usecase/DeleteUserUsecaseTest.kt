@@ -1,7 +1,9 @@
 package com.github.gituser.domain.user.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.github.core.data.user.local.entity.UserDetailEntity
+import com.github.core.domain.common.base.BaseResult
+import com.github.core.domain.common.base.Failure
+import com.github.core.domain.user.model.UserDetail
 import com.github.core.domain.user.repository.UserRepository
 import com.github.core.domain.user.usecase.DeleteUserUsecase
 import kotlinx.coroutines.Dispatchers
@@ -10,13 +12,13 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 class DeleteUserUsecaseTest{
@@ -45,39 +47,39 @@ class DeleteUserUsecaseTest{
     @Test
     fun `should emit Unit when call is successfully` () = runTest {
         val username ="John Doe"
-        val userDetailEntity = UserDetailEntity(username)
-        val baseResultSuccess = com.github.core.domain.common.base.BaseResult.Success(Unit)
+        val userDetail = UserDetail(username)
+        val baseResultSuccess = BaseResult.Success(Unit)
 
         // arrange
-        `when`(userRepository.deleteUser(userDetailEntity)).thenReturn(baseResultSuccess)
+        `when`(userRepository.deleteUser(userDetail)).thenReturn(baseResultSuccess)
 
         // act
-        val result = deleteUserUsecase.invoke(userDetailEntity)
+        val result = deleteUserUsecase.invoke(userDetail)
 
         // assert
-        verify(userRepository).deleteUser(userDetailEntity)
+        verify(userRepository).deleteUser(userDetail)
         assertEquals(baseResultSuccess, result)
     }
 
     @Test
     fun `should emit Failure when call is unsuccessfully` () = runTest {
         val username ="John Doe"
-        val userDetailEntity = UserDetailEntity(username)
-        val baseResultError = com.github.core.domain.common.base.BaseResult.Error(
-            com.github.core.domain.common.base.Failure(
+        val userDetail = UserDetail(username)
+        val baseResultError = BaseResult.Error(
+            Failure(
                 -1,
                 "DatabaseException"
             )
         )
 
         // arrange
-        `when`(userRepository.deleteUser(userDetailEntity)).thenReturn(baseResultError)
+        `when`(userRepository.deleteUser(userDetail)).thenReturn(baseResultError)
 
         // act
-        val result = deleteUserUsecase.invoke(userDetailEntity)
+        val result = deleteUserUsecase.invoke(userDetail)
 
         // assert
-        verify(userRepository).deleteUser(userDetailEntity)
+        verify(userRepository).deleteUser(userDetail)
         assertEquals(baseResultError, result)
     }
 }
