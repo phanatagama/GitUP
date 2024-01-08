@@ -3,29 +3,25 @@ package com.github.gituser.ui.main.detail
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.core.domain.user.model.User
 import com.github.gituser.databinding.FragmentFollowBinding
-import com.github.gituser.domain.user.entity.UserEntity
 import com.github.gituser.ui.common.showToast
-import com.github.gituser.ui.main.FollowFragmentState
-import com.github.gituser.ui.main.FollowViewModel
 import com.github.gituser.ui.main.ListUserAdapter
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class FollowFragment : Fragment() {
     private lateinit var binding: FragmentFollowBinding
-    private val followViewModel by viewModels<FollowViewModel>()
+    private val followViewModel: FollowViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,19 +42,17 @@ class FollowFragment : Fragment() {
             Log.d(TAG, "onViewCreated: in FollowFragment")
         }
         observe()
-//        followViewModel.follower.observe(viewLifecycleOwner, {
-//            it.getContentIfNotHandled()?.let { data ->
-//                setUsersData(data)
-//            }
-//        })
-
     }
+
     private fun observe() {
-        followViewModel.stateFollower.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED).onEach { state -> handleStateChanges(state) }.launchIn(viewLifecycleOwner.lifecycleScope)
+        followViewModel.stateFollower.flowWithLifecycle(
+            viewLifecycleOwner.lifecycle,
+            Lifecycle.State.STARTED
+        ).onEach { state -> handleStateChanges(state) }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun handleStateChanges(state: FollowFragmentState) {
-        when(state){
+        when (state) {
             is FollowFragmentState.Init -> Unit
             is FollowFragmentState.IsLoading -> handleLoading(state.isLoading)
             is FollowFragmentState.IsError -> handleError(state.message)
@@ -67,10 +61,10 @@ class FollowFragment : Fragment() {
 
     }
 
-    private fun handleSuccess(data: List<UserEntity>) {
+    private fun handleSuccess(data: List<User>) {
         Log.d(TAG, "handleSuccess: $data")
         binding.rvFollow.adapter?.let { adapter ->
-            if(adapter is ListUserAdapter){
+            if (adapter is ListUserAdapter) {
                 adapter.updateList(data)
                 Log.d(TAG, "follower adapter has been update")
             }
@@ -81,21 +75,21 @@ class FollowFragment : Fragment() {
         return requireActivity().showToast(message)
     }
 
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         val adapter = ListUserAdapter(mutableListOf())
         adapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: UserEntity) {
+            override fun onItemClicked(data: User) {
                 showSelectedUser(data)
             }
         })
-        with(binding){
+        with(binding) {
             rvFollow.adapter = adapter
             rvFollow.isNestedScrollingEnabled = false
             rvFollow.layoutManager = LinearLayoutManager(requireActivity())
-//            rvFollow.setHasFixedSize(true)
         }
     }
-    private fun showSelectedUser(user: UserEntity) {
+
+    private fun showSelectedUser(user: User) {
         val moveWithDataIntent = Intent(requireActivity(), DetailActivity::class.java)
         moveWithDataIntent.putExtra(DetailActivity.EXTRA_USER, user)
         requireActivity().startActivity(moveWithDataIntent)
@@ -110,6 +104,7 @@ class FollowFragment : Fragment() {
     companion object {
         const val TAG = "FOLLOW_FRAGMENT_TAG"
         private const val ARG_SECTION_USERNAME = "section_username"
+
         @JvmStatic
         fun newInstance(username: String) =
             FollowFragment().apply {

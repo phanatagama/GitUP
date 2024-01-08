@@ -1,10 +1,9 @@
 package com.github.gituser.domain.user.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.github.gituser.domain.common.base.BaseResult
-import com.github.gituser.domain.common.base.Failure
-import com.github.gituser.domain.user.entity.UserEntity
-import com.github.gituser.domain.user.repository.UserRepository
+import com.github.core.domain.user.model.User
+import com.github.core.domain.user.repository.UserRepository
+import com.github.core.domain.user.usecase.GetUserFollowingUsecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -13,7 +12,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,8 +47,8 @@ class GetUserFollowingUsecaseTest{
     @Test
     fun `should emit list UserEntity when call is successfully`() = runTest {
         val query = "John Doe"
-        val userEntity = listOf<UserEntity>(UserEntity(username = query, avatar = null))
-        val baseResultSuccess = BaseResult.Success(userEntity)
+        val userEntity = listOf(User(username = query, avatar = null))
+        val baseResultSuccess = com.github.core.domain.common.base.BaseResult.Success(userEntity)
         val flow = flow {
             emit(baseResultSuccess)
         }
@@ -62,14 +61,19 @@ class GetUserFollowingUsecaseTest{
 
         // assert
         verify(userRepository).getUserFollowing(query)
-        if (result is BaseResult.Success) assertEquals(userEntity, result.data)
+        if (result is com.github.core.domain.common.base.BaseResult.Success) assertEquals(userEntity, result.data)
     }
 
     @Test
     fun `should emit Failure when call is unsuccessfully`() = runTest {
         val query = "John Doe"
-        val userEntity = listOf<UserEntity>(UserEntity(username = query, avatar = null))
-        val baseResultError = BaseResult.Error(Failure(404, "NOT FOUND"))
+        val userEntity = listOf(User(username = query, avatar = null))
+        val baseResultError = com.github.core.domain.common.base.BaseResult.Error(
+            com.github.core.domain.common.base.Failure(
+                404,
+                "NOT FOUND"
+            )
+        )
         val flow = flow {
             emit(baseResultError)
         }
@@ -82,6 +86,6 @@ class GetUserFollowingUsecaseTest{
 
         // assert
         verify(userRepository).getUserFollowing(query)
-        if (result is BaseResult.Error) assertEquals(baseResultError, result)
+        if (result is com.github.core.domain.common.base.BaseResult.Error) assertEquals(baseResultError, result)
     }
 }

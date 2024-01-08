@@ -1,8 +1,9 @@
 package com.github.gituser.domain.user.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.github.gituser.domain.user.entity.UserDetailEntity
-import com.github.gituser.domain.user.repository.UserRepository
+import com.github.core.domain.user.model.UserDetail
+import com.github.core.domain.user.repository.UserRepository
+import com.github.core.domain.user.usecase.GetAllUserUsecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -47,9 +48,9 @@ class GetAllUserUsecaseTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `should emit list userDetailEntity`() = runTest {
-        val userDetailEntity = listOf(UserDetailEntity("joko"))
-        val userFlow = flow { emit(userDetailEntity) }
+    fun `should emit list userDetail`() = runTest {
+        val userDetail = listOf(UserDetail("joko"))
+        val userFlow = flow { emit(userDetail) }
 
         // arrange
         `when`(userRepository.getAllUser()).thenReturn(userFlow)
@@ -59,7 +60,7 @@ class GetAllUserUsecaseTest {
 
         // assert
         verify(userRepository).getAllUser()
-        assertEquals(userDetailEntity,result)
+        assertEquals(userDetail, result)
     }
 
 }

@@ -1,10 +1,10 @@
 package com.github.gituser.domain.user.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.github.gituser.domain.common.base.BaseResult
-import com.github.gituser.domain.common.base.Failure
-import com.github.gituser.domain.user.entity.UserEntity
-import com.github.gituser.domain.user.repository.UserRepository
+import com.github.core.domain.common.base.BaseResult
+import com.github.core.domain.user.model.User
+import com.github.core.domain.user.repository.UserRepository
+import com.github.core.domain.user.usecase.GetUsersByQueryUsecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -49,7 +49,7 @@ class GetUsersByQueryUsecaseTest {
     @Test
     fun `should emit list UserEntity when call is successfully`() = runTest {
         val query = "John Doe"
-        val userEntity = listOf<UserEntity>(UserEntity(username = query, avatar = null))
+        val userEntity = listOf(User(username = query, avatar = null))
         val baseResultSuccess = BaseResult.Success(userEntity)
         val flow = flow {
             emit(baseResultSuccess)
@@ -69,8 +69,13 @@ class GetUsersByQueryUsecaseTest {
     @Test
     fun `should emit Failure when call is unsuccessfully`() = runTest {
         val query = "John Doe"
-        val userEntity = listOf<UserEntity>(UserEntity(username = query, avatar = null))
-        val baseResultError = BaseResult.Error(Failure(404, "NOT FOUND"))
+        val userEntity = listOf(User(username = query, avatar = null))
+        val baseResultError = BaseResult.Error(
+            com.github.core.domain.common.base.Failure(
+                404,
+                "NOT FOUND"
+            )
+        )
         val flow = flow {
             emit(baseResultError)
         }
@@ -83,6 +88,9 @@ class GetUsersByQueryUsecaseTest {
 
         // assert
         verify(userRepository).getUsersByQuery(query)
-        if (result is BaseResult.Error) assertEquals(baseResultError, result)
+        if (result is BaseResult.Error) assertEquals(
+            baseResultError,
+            result
+        )
     }
 }

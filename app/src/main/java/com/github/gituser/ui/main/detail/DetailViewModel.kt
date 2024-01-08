@@ -1,97 +1,75 @@
 package com.github.gituser.ui.main.detail
 
-import androidx.lifecycle.*
-import com.github.gituser.domain.common.base.BaseResult
-import com.github.gituser.domain.user.entity.UserDetailEntity
-import com.github.gituser.domain.user.usecase.DeleteUserUsecase
-import com.github.gituser.domain.user.usecase.GetAllUserUsecase
-import com.github.gituser.domain.user.usecase.GetUserDetailUsecase
-import com.github.gituser.domain.user.usecase.InsertUserUsecase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.github.core.domain.common.base.BaseResult
+import com.github.core.domain.user.model.UserDetail
+import com.github.core.domain.user.usecase.DeleteUserUsecase
+import com.github.core.domain.user.usecase.GetAllUserUsecase
+import com.github.core.domain.user.usecase.GetUserDetailUsecase
+import com.github.core.domain.user.usecase.InsertUserUsecase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-sealed class DetailActivityState{
-    object Init: DetailActivityState()
-    data class IsLoading(val isLoading : Boolean) : DetailActivityState()
-    data class IsError(val message : String) : DetailActivityState()
-    data class IsSuccess(val userDetailEntity: UserDetailEntity?) : DetailActivityState()
+sealed class DetailActivityState {
+    object Init : DetailActivityState()
+    data class IsLoading(val isLoading: Boolean) : DetailActivityState()
+    data class IsError(val message: String) : DetailActivityState()
+    data class IsSuccess(val userDetail: UserDetail?) : DetailActivityState()
 }
 
-@HiltViewModel
-class DetailViewModel @Inject constructor(
+class DetailViewModel(
     private val getUserDetailUsecase: GetUserDetailUsecase,
     private val getAllUserUsecase: GetAllUserUsecase,
     private val insertUserUsecase: InsertUserUsecase,
-    private val deleteUserUsecase: DeleteUserUsecase): ViewModel() {
+    private val deleteUserUsecase: DeleteUserUsecase
+) : ViewModel() {
 
-    private  val _state = MutableStateFlow<DetailActivityState>(DetailActivityState.Init)
-    val state: StateFlow<DetailActivityState> get() =_state
+    private val _state = MutableStateFlow<DetailActivityState>(DetailActivityState.Init)
+    val state: StateFlow<DetailActivityState> get() = _state
 
-//    private val _stateUserFavorite = MutableStateFlow<DetailActivityState>(DetailActivityState.Init)
-//    val stateUserFavorite : StateFlow<DetailActivityState> = _stateUserFavorite
-
-    private fun setLoading(){
+    private fun setLoading() {
         _state.value = DetailActivityState.IsLoading(true)
     }
 
-    private fun hideLoading(){
+    private fun hideLoading() {
         _state.value = DetailActivityState.IsLoading(false)
     }
 
-    private fun setError(message: String){
+    private fun setError(message: String) {
         _state.value = DetailActivityState.IsError(message)
     }
 
-//    private fun setFavoriteLoading(){
-//        _stateUserFavorite.value = DetailActivityState.IsLoading(true)
-//    }
-//
-//    private fun hideFavoriteLoading(){
-//        _stateUserFavorite.value = DetailActivityState.IsLoading(false)
-//    }
-//
-//    private fun setFavoriteError(message: String){
-//        _stateUserFavorite.value = DetailActivityState.IsError(message)
-//    }
-
-    fun insertUserDetail(userDetailEntity: UserDetailEntity){
+    fun insertUserDetail(userDetail: UserDetail) {
         viewModelScope.launch {
-            insertUserUsecase.invoke(userDetailEntity)
+            insertUserUsecase.invoke(userDetail)
         }
-//        getAllUser(userDetailEntity.username)
     }
 
-    fun deleteUserDetail(userDetailEntity: UserDetailEntity){
+    fun deleteUserDetail(userDetail: UserDetail) {
         viewModelScope.launch {
-            deleteUserUsecase.invoke(userDetailEntity)
+            deleteUserUsecase.invoke(userDetail)
         }
-//        getAllUser(userDetailEntity.username)
     }
 
-//    fun getAllUser(username:String){
-//        viewModelScope.launch {
-//            getAllUserUsecase.invoke().onStart {
-//                setFavoriteLoading()
-//            }.catch { exception -> hideFavoriteLoading()
-//                setFavoriteError(exception.message.toString())
-//            }.collect { baseResult ->
-//                hideFavoriteLoading()
-//                when(baseResult){
-//                is BaseResult.Success -> _stateUserFavorite.value = DetailActivityState.IsSuccess(
-//                    baseResult.data.firstOrNull { it.username == username })
-//                is BaseResult.Error -> setError(baseResult.err.message)
-//            } }
-//        }
-//    }
-
-    fun getUserDetail(username:String){
+    fun getUserDetail(username: String) {
         viewModelScope.launch {
-            combine(getUserDetailUsecase.invoke(username),getAllUserUsecase.invoke()){userDetail, favoriteUser ->
-                if(userDetail is BaseResult.Success){
-                    val isFavorite = favoriteUser.firstOrNull{ it.username == username} != null
-                    BaseResult.Success(userDetail.data.copy(isFavorite = isFavorite))
+            combine(
+                getUserDetailUsecase.invoke(username),
+                getAllUserUsecase.invoke()
+            ) { userDetail, favoriteUser ->
+                if (userDetail is BaseResult.Success) {
+                    val isFavorite = favoriteUser.firstOrNull { it.username == username } != null
+                    BaseResult.Success(
+                        userDetail.data.copy(
+                            isFavorite = isFavorite
+                        )
+                    )
                 } else {
                     userDetail
                 }
@@ -102,26 +80,13 @@ class DetailViewModel @Inject constructor(
                 setError(exception.message.toString())
             }.collect { baseResult ->
                 hideLoading()
-                when(baseResult) {
-                    is BaseResult.Success -> _state.value = DetailActivityState.IsSuccess(baseResult.data)
+                when (baseResult) {
+                    is BaseResult.Success -> _state.value =
+                        DetailActivityState.IsSuccess(baseResult.data)
+
                     is BaseResult.Error -> setError(baseResult.err.message)
                 }
             }
-//            getUserDetailUsecase.invoke(username).onStart {
-//                setLoading()
-//            }.catch { exception -> hideLoading()
-//            setError(exception.message.toString())
-//            }.collect { baseResult ->
-//                hideLoading()
-//                when(baseResult) {
-//                  is BaseResult.Success -> _state.value = DetailActivityState.IsSuccess(baseResult.data)
-//                     is BaseResult.Error -> setError(baseResult.err.message)
-//                }
-//            }
         }
-    }
-
-    companion object {
-        private const val TAG = "DETAIL_VIEW_MODEL_TAG"
     }
 }

@@ -1,10 +1,9 @@
 package com.github.gituser.domain.user.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.github.gituser.domain.common.base.BaseResult
-import com.github.gituser.domain.common.base.Failure
-import com.github.gituser.domain.user.entity.UserDetailEntity
-import com.github.gituser.domain.user.repository.UserRepository
+import com.github.core.data.user.local.entity.UserDetailEntity
+import com.github.core.domain.user.repository.UserRepository
+import com.github.core.domain.user.usecase.InsertUserUsecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
@@ -46,7 +45,7 @@ class InsertUserUsecaseTest{
     fun `should emit Unit when call is successfully` () = runTest {
         val username ="John Doe"
         val userDetailEntity = UserDetailEntity(username)
-        val baseResultSuccess = BaseResult.Success(Unit)
+        val baseResultSuccess = com.github.core.domain.common.base.BaseResult.Success(Unit)
 
         // arrange
         Mockito.`when`(userRepository.insertUser(userDetailEntity)).thenReturn(baseResultSuccess)
@@ -63,7 +62,12 @@ class InsertUserUsecaseTest{
     fun `should emit Failure when call is unsuccessfully` () = runTest {
         val username ="John Doe"
         val userDetailEntity = UserDetailEntity(username)
-        val baseResultError = BaseResult.Error(Failure(-1,"DatabaseException"))
+        val baseResultError = com.github.core.domain.common.base.BaseResult.Error(
+            com.github.core.domain.common.base.Failure(
+                -1,
+                "DatabaseException"
+            )
+        )
 
         // arrange
         Mockito.`when`(userRepository.insertUser(userDetailEntity)).thenReturn(baseResultError)

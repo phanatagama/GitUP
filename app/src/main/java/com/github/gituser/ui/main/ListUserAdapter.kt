@@ -7,18 +7,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.github.core.domain.user.model.User
 import com.github.gituser.databinding.ItemRowUserBinding
-import com.github.gituser.domain.user.entity.UserEntity
 
-class ListUserAdapter(private val listUser: MutableList<UserEntity>) : RecyclerView.Adapter<ListUserAdapter.ListViewHolder>() {
+class ListUserAdapter(private val listUser: MutableList<User>) : RecyclerView.Adapter<ListUserAdapter.ListViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
-    fun updateList(data: List<UserEntity>){
+    fun updateList(data: List<User>){
         listUser.clear()
         listUser.addAll(data)
         Log.d(TAG, "updateList: $listUser")
@@ -37,11 +38,11 @@ class ListUserAdapter(private val listUser: MutableList<UserEntity>) : RecyclerV
     override fun getItemCount(): Int = listUser.size
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: UserEntity)
+        fun onItemClicked(data: User)
     }
 
     inner class ListViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(data: UserEntity){
+        fun bind(data: User){
             Log.d(TAG, "bind: BINDING DATA INTO VIEW STARTED")
             with(binding){
             Glide.with(itemView.context)

@@ -1,10 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
+    id("com.google.devtools.ksp")
     id 'kotlin-parcelize'
-    id 'dagger.hilt.android.plugin'
 }
+apply from: '../shared_dependencies.gradle'
 
 android {
     compileSdk 31
@@ -20,10 +20,16 @@ android {
         buildConfigField("String", "USER_PREFERENCE", USER_PREFERENCE)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    lintOptions {
+        disable 'VectorPath'
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -38,76 +44,25 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    dynamicFeatures = [':favorite']
 }
 
 dependencies {
-    androidTestImplementation 'androidx.test:rules:1.4.1-alpha07'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.6.0-alpha01'
+    androidTestImplementation 'androidx.test:rules:1.6.0-alpha02'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.6.0-alpha02'
 
-    def lifecycle_version = "2.4.0"
-    def circleimageview_version = "3.1.0"
-    def glide_version = "4.12.0"
-    def viewpager_version = "1.0.0"
-    def retrofit_version = "2.9.0"
-    def room_version = "2.3.0"
-    def datastore_version = "1.0.0"
-    def dagger_hilt_version = "2.37"
-    def dagger_hilt_viewmodel_version = "1.0.0-alpha03"
-    def mockito_version = "5.1.0"
-    def coroutines_version = "1.6.0"
+    // module
+    implementation project(":core")
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation "com.google.android.play:core:1.10.3"
 
-    // Android UI
-    implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("androidx.activity:activity-ktx:1.3.1")
-    implementation("androidx.fragment:fragment-ktx:1.3.6")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.1")
+    implementation("androidx.viewpager2:viewpager2:$viewpager_version")
 
     // splash
     implementation("androidx.core:core-splashscreen:1.0.1")
 
-    // circle image
-    implementation("de.hdodenhof:circleimageview:$circleimageview_version")
-
-    // load image from network
-    implementation("com.github.bumptech.glide:glide:$glide_version")
-
-    // lifecycle - ktx
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
-
-    // viewpager
-    implementation("androidx.viewpager2:viewpager2:$viewpager_version")
-
-    // networking
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
-
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-
-    // room
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-
-    // datastore
-    implementation("androidx.datastore:datastore-preferences:$datastore_version")
-
-    // dagger - Hilt
-    implementation("com.google.dagger:hilt-android:$dagger_hilt_version")
-    kapt("com.google.dagger:hilt-android-compiler:$dagger_hilt_version")
-    kapt("androidx.hilt:hilt-compiler:$dagger_hilt_viewmodel_version")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:$dagger_hilt_viewmodel_version")
-
     // testing
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.6.0-alpha01')
-    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
 
     // mock
     testImplementation("org.mockito.kotlin:mockito-kotlin:$mockito_version")

@@ -1,9 +1,9 @@
 package com.github.gituser.ui.splash
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.github.gituser.databinding.ActivitySplashBinding
 import com.github.gituser.ui.main.MainActivity
@@ -22,22 +22,10 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         lifecycleScope.launch {
             delay(3000L)
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 val intent = Intent(this@SplashActivity, MainActivity::class.java)
                 startActivity(intent)
-//                finish()
             }
         }
-
-//        window.setFlags(
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN
-//        )
-//
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }, 3000)
     }
 }

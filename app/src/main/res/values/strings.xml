@@ -18,23 +18,7 @@
     <string name="search">Search</string>
     <string name="search_hint">Ketik Username</string>
     <string name="detail_user">Detail User</string>
-    <string name="follow">Follower/Following</string>
     <string name="dark_mode">Dark</string>
     <string name="favorite">Favorite</string>
-    <string name="remove_favorite">Remove Favorite</string>
-    <string name="submit">Submit</string>
-    <string name="delete">Hapus</string>
-    <string name="message_undo">Batalkan menghapus item sebelumnya?</string>
-    <string name="message_ok">OK</string>
-    <string name="cancel">Batal</string>
-    <string name="empty">Field can not be blank</string>
-    <string name="update">Update</string>
-    <string name="change">Ubah</string>
-    <string name="add">Tambah</string>
-    <string name="save">Simpan</string>
-    <string name="yes">Ya</string>
-    <string name="no">Tidak</string>
-    <string name="message_delete">Apakah anda yakin ingin menghapus user ini?</string>
-    <string name="added">Satu User berhasil ditambahkan</string>
-    <string name="deleted">Satu User berhasil dihapus</string>
+    <string name="title_base">Base</string>
 </resources>

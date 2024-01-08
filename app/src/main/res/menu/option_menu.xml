@@ -6,10 +6,10 @@
         android:icon="@drawable/ic_baseline_search_white_24px"
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|always" />
+        app:showAsAction="collapseActionView|ifRoom" />
     <item
         android:id="@+id/app_bar_switch"
         android:title="@string/dark_mode"
         app:actionLayout="@layout/switch_item"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

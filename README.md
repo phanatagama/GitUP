@@ -1,3 +1,4 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/phanatagama/GitUP/tree/dev-modularization.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/phanatagama/GitUP/tree/dev-modularization)
 ![GitUP](https://socialify.git.ci/phanatagama/GitUP/image?description=1&font=KoHo&forks=1&issues=1&pattern=Overlapping%20Hexagons&pulls=1&stargazers=1&theme=Auto)
 <p align="center">
 <img src="https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white" />
@@ -30,8 +31,8 @@ This application is built with Android Architecture Components such as Kotlin Fl
 GitUP is a mobile application built with Kotlin programming. Data sources are hardcoded in Kotlin classes according to the terms and conditions of the submission.
 
 ## 🛠️ Tech Stack Used
-| Kotlin      | Android Studio      | Git      | Github      | Figma      |
-|------------|-------------|-------------|-------------|-------------|
+| Kotlin                                                                                                                   | Android Studio                                                                                                                                                               | Git                                                                                   | Github                                                                                                                                         | Figma                                                                           |
+|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
 | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin_Icon.png/1024px-Kotlin_Icon.png" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Android_Studio_Icon_%282014-2019%29.svg/1200px-Android_Studio_Icon_%282014-2019%29.svg.png" width="150"> | <img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" width="150"> | <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" width="150"> |
 
 <!-- ### Extra Library -->

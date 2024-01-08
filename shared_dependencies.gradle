@@ -1,0 +1,32 @@
+dependencies {
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.6.21"))
+    // Android UI
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    // circle image
+    implementation("de.hdodenhof:circleimageview:$circleimageview_version")
+
+    // load image from network
+    implementation("com.github.bumptech.glide:glide:$glide_version")
+
+    // networking
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    
+    // Testing
+    testImplementation("junit:junit:$junit_version")
+    androidTestImplementation("androidx.test.ext:junit:$androidx_junit_version")
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espresso_version")
+
+    // Koin - Dependency Injection
+    implementation("io.insert-koin:koin-core:$koin_version")
+    implementation("io.insert-koin:koin-android:$koin_version")
+
+    // LeakCanary
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:$leak_canary_version")
+}
