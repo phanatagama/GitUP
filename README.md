@@ -1,4 +1,5 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/phanatagama/GitUP/tree/dev-modularization.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/phanatagama/GitUP/tree/dev-modularization)
+
+[![phanatagama](https://circleci.com/gh/phanatagama/GitUP.svg?style=svg)](https://circleci.com/gh/phanatagama/GitUP)
 ![GitUP](https://socialify.git.ci/phanatagama/GitUP/image?description=1&font=KoHo&forks=1&issues=1&pattern=Overlapping%20Hexagons&pulls=1&stargazers=1&theme=Auto)
 <p align="center">
 <img src="https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white" />
@@ -33,7 +34,9 @@ GitUP is a mobile application built with Kotlin programming. Data sources are ha
 ## 🛠️ Tech Stack Used
 | Kotlin                                                                                                                   | Android Studio                                                                                                                                                               | Git                                                                                   | Github                                                                                                                                         | Figma                                                                           |
 |--------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
-| <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin_Icon.png/1024px-Kotlin_Icon.png" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Android_Studio_Icon_%282014-2019%29.svg/1200px-Android_Studio_Icon_%282014-2019%29.svg.png" width="150"> | <img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" width="150"> | <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" width="150"> |
+| <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin_Icon.png/1024px-Kotlin_Icon.png" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Android_Studio_Icon_%282014-2019%29.svg/1200px-Android_Studio_Icon_%282014-2019%29.svg.png" width="150"> | <img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" width="150"> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" width="150"> | <img src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" width="150"> 
+
+
 
 <!-- ### Extra Library -->
 <!-- - [Epoxy](https://github.com/airbnb/epoxy) Complex RecyclerView with difference model type -->
@@ -50,9 +53,8 @@ This project is an old project that was updated so that some functions do not ru
 
 ## 👁️ Preview/Screenshots
 
-| ![landing-page](https://user-images.githubusercontent.com/48324618/145372808-ae5dc7a8-f310-4643-84ed-b678a8aeeff1.jpg) **Landing Page** | ![login-page](https://user-images.githubusercontent.com/48324618/145372649-d459f07a-ba18-4cd0-aee1-fe91524abce5.jpg) **Login Page** | ![register-pagge](https://user-images.githubusercontent.com/48324618/145372937-6fddfba7-4abd-40fa-aa01-c01d349ad1d8.jpg) **Register Page** | ![usr-profile](https://user-images.githubusercontent.com/48324618/145373431-ebd4e049-9558-4fd7-8e0d-80f0b83b02e3.jpg) **User Profile** |
+| ![Detail-page](https://github.com/phanatagama/GitUP/assets/48324618/6d7423c6-83ee-47c0-91fb-46e53bc61430) **Detail Page** | ![Home-page](https://github.com/phanatagama/GitUP/assets/48324618/29e0a6ce-3c18-4739-83e5-72d1c49bc80b) **Home Page** | ![Detail-page](https://github.com/phanatagama/GitUP/assets/48324618/0cc657a9-f955-4a3f-837e-ebee5785af0d) **Detail Page** | ![favorite-page](https://github.com/phanatagama/GitUP/assets/48324618/35f8c881-e719-473f-82d4-57a39c814183) **Favorite Page** |
 | :--: | :--: | :--: | :--: |
-| ![home-page](https://user-images.githubusercontent.com/48324618/145373302-0a966fd3-e787-41c7-8c18-fc1e9ed79588.jpg) **Home Page** | ![detail-product](https://user-images.githubusercontent.com/48324618/145373659-0c01acd8-f2b8-4f9f-a2b3-320117b61593.jpg) **Detail Product** | ![product-page](https://user-images.githubusercontent.com/48324618/145373555-45e28331-c41d-47f1-96a5-74cd2d6d3728.jpg) **Product Page** | ![edit-product](https://user-images.githubusercontent.com/48324618/145373915-5c340a34-9e18-44a8-b81a-cc63882a313a.jpg) **Add/Edit Product** |
 <!-- |   -->
 
 ## License
