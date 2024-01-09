@@ -11,8 +11,9 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-
+@Suppress("SpellCheckingInspection")
 fun provideOkHttp(requestInterceptor: RequestInterceptor): OkHttpClient {
+
     val hostname = "api.github.com"
     val certificate = CertificatePinner.Builder()
         .add(hostname, "sha256/jFaeVpA8UQuidlJkkpIdq3MPwD0m8XbuCRbJlezysBE=")

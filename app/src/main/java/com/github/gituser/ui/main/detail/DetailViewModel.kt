@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.core.domain.common.base.BaseResult
 import com.github.core.domain.user.model.UserDetail
-import com.github.core.domain.user.usecase.DeleteUserUsecase
-import com.github.core.domain.user.usecase.GetAllUserUsecase
-import com.github.core.domain.user.usecase.GetUserDetailUsecase
-import com.github.core.domain.user.usecase.InsertUserUsecase
+import com.github.core.domain.user.usecase.DeleteUserUseCase
+import com.github.core.domain.user.usecase.GetAllUserUseCase
+import com.github.core.domain.user.usecase.GetUserDetailUseCase
+import com.github.core.domain.user.usecase.InsertUserUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -24,10 +24,10 @@ sealed class DetailActivityState {
 }
 
 class DetailViewModel(
-    private val getUserDetailUsecase: GetUserDetailUsecase,
-    private val getAllUserUsecase: GetAllUserUsecase,
-    private val insertUserUsecase: InsertUserUsecase,
-    private val deleteUserUsecase: DeleteUserUsecase
+    private val getUserDetailUseCase: GetUserDetailUseCase,
+    private val getAllUserUseCase: GetAllUserUseCase,
+    private val insertUserUseCase: InsertUserUseCase,
+    private val deleteUserUseCase: DeleteUserUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<DetailActivityState>(DetailActivityState.Init)
@@ -47,21 +47,21 @@ class DetailViewModel(
 
     fun insertUserDetail(userDetail: UserDetail) {
         viewModelScope.launch {
-            insertUserUsecase.invoke(userDetail)
+            insertUserUseCase.invoke(userDetail)
         }
     }
 
     fun deleteUserDetail(userDetail: UserDetail) {
         viewModelScope.launch {
-            deleteUserUsecase.invoke(userDetail)
+            deleteUserUseCase.invoke(userDetail)
         }
     }
 
     fun getUserDetail(username: String) {
         viewModelScope.launch {
             combine(
-                getUserDetailUsecase.invoke(username),
-                getAllUserUsecase.invoke()
+                getUserDetailUseCase.invoke(username),
+                getAllUserUseCase.invoke()
             ) { userDetail, favoriteUser ->
                 if (userDetail is BaseResult.Success) {
                     val isFavorite = favoriteUser.firstOrNull { it.username == username } != null

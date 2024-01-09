@@ -22,10 +22,10 @@
 Github is a version control system that is quite popular among developers. Each developer has a unique project repository and has several followers in their account. To get detailed information about github accounts, users can use this application and add favourite developers to the favourite list and store them on local storage.
 
 ## ♻️ Project Goals
-This application was created to complete the submission [Fundamental Aplikasi Android](https://www.dicoding.com/academies/14)
+This application was created to complete the submission [Fundamental Apps Android](https://www.dicoding.com/academies/14)
 
 ## 🤯 Challenges we faced
-This application is built with Android Architecture Components such as Kotlin Flow, Coroutiones and others. Room is used as local storage for user favourite data and Dagger-Hilt is used for dependency injection.
+This application is built with Android Architecture Components such as Kotlin Flow, Coroutines and others. Room is used as local storage for user favourite data and Dagger-Hilt is used for dependency injection.
 
 ## 🧐 How we built our project
 GitUP is a mobile application built with Kotlin programming. Data sources are hardcoded in Kotlin classes according to the terms and conditions of the submission.
@@ -50,7 +50,7 @@ This project is an old project that was updated so that some functions do not ru
 
 ## 👁️ Preview/Screenshots
 
-| ![landing-page](https://user-images.githubusercontent.com/48324618/145372808-ae5dc7a8-f310-4643-84ed-b678a8aeeff1.jpg) **Landing Page** | ![login-page](https://user-images.githubusercontent.com/48324618/145372649-d459f07a-ba18-4cd0-aee1-fe91524abce5.jpg) **Login Page** | ![register-pagge](https://user-images.githubusercontent.com/48324618/145372937-6fddfba7-4abd-40fa-aa01-c01d349ad1d8.jpg) **Register Page** | ![usr-profile](https://user-images.githubusercontent.com/48324618/145373431-ebd4e049-9558-4fd7-8e0d-80f0b83b02e3.jpg) **User Profile** |
+| ![landing-page](https://user-images.githubusercontent.com/48324618/145372808-ae5dc7a8-f310-4643-84ed-b678a8aeeff1.jpg) **Landing Page** | ![login-page](https://user-images.githubusercontent.com/48324618/145372649-d459f07a-ba18-4cd0-aee1-fe91524abce5.jpg) **Login Page** | ![register-page](https://user-images.githubusercontent.com/48324618/145372937-6fddfba7-4abd-40fa-aa01-c01d349ad1d8.jpg) **Register Page** | ![usr-profile](https://user-images.githubusercontent.com/48324618/145373431-ebd4e049-9558-4fd7-8e0d-80f0b83b02e3.jpg) **User Profile** |
 | :--: | :--: | :--: | :--: |
 | ![home-page](https://user-images.githubusercontent.com/48324618/145373302-0a966fd3-e787-41c7-8c18-fc1e9ed79588.jpg) **Home Page** | ![detail-product](https://user-images.githubusercontent.com/48324618/145373659-0c01acd8-f2b8-4f9f-a2b3-320117b61593.jpg) **Detail Product** | ![product-page](https://user-images.githubusercontent.com/48324618/145373555-45e28331-c41d-47f1-96a5-74cd2d6d3728.jpg) **Product Page** | ![edit-product](https://user-images.githubusercontent.com/48324618/145373915-5c340a34-9e18-44a8-b81a-cc63882a313a.jpg) **Add/Edit Product** |
 <!-- |   -->
@@ -62,9 +62,6 @@ This project is licensed under the MIT License.
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
 <table>
   <tr>
     <td align="center"><a href="https://github.com/phanatagama"><img src="https://avatars.githubusercontent.com/u/48324618?s=100?v=4" width="100px;" alt=""/><br /><sub><b>Cahyadi Setia Phanatagama</b></sub></a><br /><a href="https://github.com/phanatagama/GitUP/commits?author=phanatagama" title="Code">💻</a> <a href="#infra-phanatagama" title="Infrastructure (Databases, Build-Tools, etc)">🚇</a></td>
@@ -72,7 +69,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 </table>
 
 
-<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->

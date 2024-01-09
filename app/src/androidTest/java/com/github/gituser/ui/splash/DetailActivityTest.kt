@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.github.gituser.ui.splash
 
 
@@ -15,8 +17,8 @@ import androidx.test.runner.AndroidJUnit4
 import com.github.gituser.R
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.`is`
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
@@ -63,7 +65,7 @@ class DetailActivityTest {
                 isDisplayed()
             )
         )
-        searchAutoComplete.perform(replaceText("phanatagama"), closeSoftKeyboard())
+        searchAutoComplete.perform(replaceText("dave"), closeSoftKeyboard())
 
         val recyclerView = onView(
             allOf(
@@ -141,7 +143,7 @@ class DetailActivityTest {
 
         val recyclerView2 = onView(
             allOf(
-                withId(R.id.rv_users),
+                withId(R.id.rv_user),
                 childAtPosition(
                     withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
                     1
@@ -152,12 +154,12 @@ class DetailActivityTest {
 
         val textView = onView(
             allOf(
-                withId(R.id.tv_item_name), withText("phanatagama"),
+                withId(R.id.tv_item_name), withText("dave"),
                 withParent(withParent(withId(android.R.id.content))),
                 isDisplayed()
             )
         )
-        textView.check(matches(withText("phanatagama")))
+        textView.check(matches(withText("dave")))
 
         val imageButton = onView(
             allOf(

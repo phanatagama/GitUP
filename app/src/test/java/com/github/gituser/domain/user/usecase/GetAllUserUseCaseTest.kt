@@ -3,7 +3,8 @@ package com.github.gituser.domain.user.usecase
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.core.domain.user.model.UserDetail
 import com.github.core.domain.user.repository.UserRepository
-import com.github.core.domain.user.usecase.GetAllUserUsecase
+import com.github.core.domain.user.usecase.GetAllUserUseCase
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -22,8 +23,9 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
 
-class GetAllUserUsecaseTest {
-    private lateinit var getAllUserUsecase: GetAllUserUsecase
+@OptIn(DelicateCoroutinesApi::class, ExperimentalCoroutinesApi::class)
+class GetAllUserUseCaseTest {
+    private lateinit var getAllUserUseCase: GetAllUserUseCase
 
     @Mock
     private lateinit var userRepository: UserRepository
@@ -37,7 +39,7 @@ class GetAllUserUsecaseTest {
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
         MockitoAnnotations.openMocks(this)
-        getAllUserUsecase = GetAllUserUsecase(userRepository)
+        getAllUserUseCase = GetAllUserUseCase(userRepository)
     }
 
     @After
@@ -56,7 +58,7 @@ class GetAllUserUsecaseTest {
         `when`(userRepository.getAllUser()).thenReturn(userFlow)
 
         // act
-        val result = getAllUserUsecase.invoke().first()
+        val result = getAllUserUseCase.invoke().first()
 
         // assert
         verify(userRepository).getAllUser()

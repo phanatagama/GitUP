@@ -1,10 +1,14 @@
 package com.github.gituser.domain.user.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.github.core.domain.common.base.BaseResult
+import com.github.core.domain.common.base.Failure
 import com.github.core.domain.user.model.User
 import com.github.core.domain.user.repository.UserRepository
-import com.github.core.domain.user.usecase.GetUserFollowingUsecase
+import com.github.core.domain.user.usecase.GetUsersByQueryUseCase
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.newSingleThreadContext
@@ -17,16 +21,19 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
 
-class GetUserFollowingUsecaseTest{
-    private lateinit var getUserFollowingUsecase: GetUserFollowingUsecase
+@OptIn(DelicateCoroutinesApi::class, ExperimentalCoroutinesApi::class)
+class GetUsersByQueryUseCaseTest {
+    private lateinit var getUsersByQueryUseCase: GetUsersByQueryUseCase
+
     @Mock
     private lateinit var userRepository: UserRepository
 
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
+    private val mainThreadSurrogate =
+        newSingleThreadContext("UI thread")
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -35,7 +42,7 @@ class GetUserFollowingUsecaseTest{
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
         MockitoAnnotations.openMocks(this)
-        getUserFollowingUsecase = GetUserFollowingUsecase(userRepository)
+        getUsersByQueryUseCase = GetUsersByQueryUseCase(userRepository)
     }
 
     @After
@@ -48,28 +55,27 @@ class GetUserFollowingUsecaseTest{
     fun `should emit list UserEntity when call is successfully`() = runTest {
         val query = "John Doe"
         val userEntity = listOf(User(username = query, avatar = null))
-        val baseResultSuccess = com.github.core.domain.common.base.BaseResult.Success(userEntity)
+        val baseResultSuccess = BaseResult.Success(userEntity)
         val flow = flow {
             emit(baseResultSuccess)
         }
 
         // arrange
-        Mockito.`when`(userRepository.getUserFollowing(query)).thenReturn(flow)
+        `when`(userRepository.getUsersByQuery(query)).thenReturn(flow)
 
         // act
-        val result = getUserFollowingUsecase.invoke(query).first()
+        val result = getUsersByQueryUseCase.invoke(query).first()
 
         // assert
-        verify(userRepository).getUserFollowing(query)
-        if (result is com.github.core.domain.common.base.BaseResult.Success) assertEquals(userEntity, result.data)
+        verify(userRepository).getUsersByQuery(query)
+        if (result is BaseResult.Success) assertEquals(userEntity, result.data)
     }
 
     @Test
     fun `should emit Failure when call is unsuccessfully`() = runTest {
         val query = "John Doe"
-        val userEntity = listOf(User(username = query, avatar = null))
-        val baseResultError = com.github.core.domain.common.base.BaseResult.Error(
-            com.github.core.domain.common.base.Failure(
+        val baseResultError = BaseResult.Error(
+            Failure(
                 404,
                 "NOT FOUND"
             )
@@ -79,13 +85,16 @@ class GetUserFollowingUsecaseTest{
         }
 
         // arrange
-        Mockito.`when`(userRepository.getUserFollowing(query)).thenReturn(flow)
+        `when`(userRepository.getUsersByQuery(query)).thenReturn(flow)
 
         // act
-        val result = getUserFollowingUsecase.invoke(query).first()
+        val result = getUsersByQueryUseCase.invoke(query).first()
 
         // assert
-        verify(userRepository).getUserFollowing(query)
-        if (result is com.github.core.domain.common.base.BaseResult.Error) assertEquals(baseResultError, result)
+        verify(userRepository).getUsersByQuery(query)
+        if (result is BaseResult.Error) assertEquals(
+            baseResultError,
+            result
+        )
     }
 }

@@ -3,7 +3,7 @@ package com.github.gituser.favorite
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.core.domain.user.model.User
-import com.github.core.domain.user.usecase.GetAllUserUsecase
+import com.github.core.domain.user.usecase.GetAllUserUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -16,7 +16,7 @@ import org.koin.dsl.module
 val favoriteViewModelModule = module {
     viewModel { FavoriteViewModel(get()) }
 }
-class FavoriteViewModel constructor(private val getAllUserUsecase: GetAllUserUsecase) :
+class FavoriteViewModel constructor(private val getAllUserUseCase: GetAllUserUseCase) :
     ViewModel() {
     private val _state = MutableStateFlow<FavoriteActivityState>(FavoriteActivityState.Init)
     val state: StateFlow<FavoriteActivityState> get() = _state
@@ -38,7 +38,7 @@ class FavoriteViewModel constructor(private val getAllUserUsecase: GetAllUserUse
 
     private fun getFavoriteUser() {
         viewModelScope.launch {
-            getAllUserUsecase.invoke().onStart { setLoading() }.catch { exception ->
+            getAllUserUseCase.invoke().onStart { setLoading() }.catch { exception ->
                 hideLoading()
                 setError(exception.message.toString())
             }.collect { baseResult ->

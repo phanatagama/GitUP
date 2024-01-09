@@ -6,8 +6,8 @@ import com.github.core.domain.user.model.User
 import com.github.core.domain.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetUsersByQueryUseCase(private val userRepository: UserRepository) {
-    fun invoke(q: String): Flow<BaseResult<List<User>, Failure>> {
-        return userRepository.getUsersByQuery(q)
+class GetUserFollowersUseCase(private val userRepository: UserRepository) {
+    fun invoke(login: String): Flow<BaseResult<List<User>, Failure>> {
+        return userRepository.getUserFollowers(login)
     }
 }

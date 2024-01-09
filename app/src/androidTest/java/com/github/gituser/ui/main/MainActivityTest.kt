@@ -28,16 +28,6 @@ class MainActivityTest{
         onView(withId(R.id.search)).perform(click())
     }
 
-//    @Test(expected = PerformException::class)
-//    fun itemDoesntExistOnRecycler(){
-//        // Attempt to scroll to an item that contains the special text.
-//        onView(ViewMatchers.withId(R.id.rv_user))
-//            // scrollTo will fail the test if no item matches.
-//            .perform(RecyclerViewActions.scrollTo<ListUserAdapter.ListViewHolder>(
-//                hasDescendant(withText("not in the list"))
-//            ))
-//    }
-
     @Test
     fun assertNavigationToFavorite(){
         onView(withId(R.id.rv_user)).perform(scrollTo())

@@ -3,7 +3,7 @@
     <string name="username">username</string>
     <string name="user_name">Name</string>
     <string name="logo">Logo</string>
-    <string name="information">Informasi</string>
+    <string name="information">Information</string>
     <string name="share">Share</string>
     <string name="data_following">data_following</string>
     <string name="following">Following</string>
@@ -16,7 +16,7 @@
     <string name="data_company">data_company</string>
     <string name="company">Company</string>
     <string name="search">Search</string>
-    <string name="search_hint">Ketik Username</string>
+    <string name="search_hint">Type Username</string>
     <string name="detail_user">Detail User</string>
     <string name="dark_mode">Dark</string>
     <string name="favorite">Favorite</string>

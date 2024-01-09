@@ -5,8 +5,10 @@ import com.github.core.domain.common.base.BaseResult
 import com.github.core.domain.common.base.Failure
 import com.github.core.domain.user.model.UserDetail
 import com.github.core.domain.user.repository.UserRepository
-import com.github.core.domain.user.usecase.GetUserDetailUsecase
+import com.github.core.domain.user.usecase.GetUserDetailUseCase
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.newSingleThreadContext
@@ -24,8 +26,9 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
-class GetUserDetailUsecaseTest {
-    private lateinit var getUserDetailUsecase: GetUserDetailUsecase
+@OptIn(DelicateCoroutinesApi::class, ExperimentalCoroutinesApi::class)
+class GetUserDetailUseCaseTest {
+    private lateinit var getUserDetailUseCase: GetUserDetailUseCase
     @Mock
     private lateinit var userRepository: UserRepository
 
@@ -38,7 +41,7 @@ class GetUserDetailUsecaseTest {
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
         MockitoAnnotations.openMocks(this)
-        getUserDetailUsecase = GetUserDetailUsecase(userRepository)
+        getUserDetailUseCase = GetUserDetailUseCase(userRepository)
     }
 
     @After
@@ -57,7 +60,7 @@ class GetUserDetailUsecaseTest {
         `when`(userRepository.getUserDetail(username)).thenReturn(flow)
 
         // act
-        val result = getUserDetailUsecase.invoke(username).first()
+        val result = getUserDetailUseCase.invoke(username).first()
 
         // assert
         verify(userRepository).getUserDetail(username)
@@ -77,7 +80,7 @@ class GetUserDetailUsecaseTest {
         `when`(userRepository.getUserDetail(username)).thenReturn(flow)
 
         // act
-        val result = getUserDetailUsecase.invoke(username).first()
+        val result = getUserDetailUseCase.invoke(username).first()
 
         // assert
         verify(userRepository).getUserDetail(username)

@@ -3,8 +3,10 @@ package com.github.gituser.domain.user.usecase
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.core.domain.user.model.UserDetail
 import com.github.core.domain.user.repository.UserRepository
-import com.github.core.domain.user.usecase.InsertUserUsecase
+import com.github.core.domain.user.usecase.InsertUserUseCase
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -18,8 +20,9 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class InsertUserUsecaseTest{
-    private lateinit var insertUserUsecase: InsertUserUsecase
+@OptIn(ExperimentalCoroutinesApi::class, DelicateCoroutinesApi::class)
+class InsertUserUseCaseTest{
+    private lateinit var insertUserUseCase: InsertUserUseCase
     @Mock
     private lateinit var userRepository: UserRepository
 
@@ -32,7 +35,7 @@ class InsertUserUsecaseTest{
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
         MockitoAnnotations.openMocks(this)
-        insertUserUsecase = InsertUserUsecase(userRepository)
+        insertUserUseCase = InsertUserUseCase(userRepository)
     }
 
     @After
@@ -51,7 +54,7 @@ class InsertUserUsecaseTest{
         Mockito.`when`(userRepository.insertUser(userDetail)).thenReturn(baseResultSuccess)
 
         // act
-        val result = insertUserUsecase.invoke(userDetail)
+        val result = insertUserUseCase.invoke(userDetail)
 
         // assert
         Mockito.verify(userRepository).insertUser(userDetail)
@@ -73,7 +76,7 @@ class InsertUserUsecaseTest{
         Mockito.`when`(userRepository.insertUser(userDetail)).thenReturn(baseResultError)
 
         // act
-        val result = insertUserUsecase.invoke(userDetail)
+        val result = insertUserUseCase.invoke(userDetail)
 
         // assert
         Mockito.verify(userRepository).insertUser(userDetail)

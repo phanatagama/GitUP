@@ -5,8 +5,10 @@ import com.github.core.domain.common.base.BaseResult
 import com.github.core.domain.common.base.Failure
 import com.github.core.domain.user.model.UserDetail
 import com.github.core.domain.user.repository.UserRepository
-import com.github.core.domain.user.usecase.DeleteUserUsecase
+import com.github.core.domain.user.usecase.DeleteUserUseCase
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -20,9 +22,10 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+@OptIn(DelicateCoroutinesApi::class, ExperimentalCoroutinesApi::class)
+class DeleteUserUseCaseTest {
+    private lateinit var deleteUserUseCase: DeleteUserUseCase
 
-class DeleteUserUsecaseTest{
-    private lateinit var deleteUserUsecase: DeleteUserUsecase
     @Mock
     private lateinit var userRepository: UserRepository
 
@@ -35,7 +38,7 @@ class DeleteUserUsecaseTest{
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
         MockitoAnnotations.openMocks(this)
-        deleteUserUsecase = DeleteUserUsecase(userRepository)
+        deleteUserUseCase = DeleteUserUseCase(userRepository)
     }
 
     @After
@@ -45,8 +48,8 @@ class DeleteUserUsecaseTest{
     }
 
     @Test
-    fun `should emit Unit when call is successfully` () = runTest {
-        val username ="John Doe"
+    fun `should emit Unit when call is successfully`() = runTest {
+        val username = "John Doe"
         val userDetail = UserDetail(username)
         val baseResultSuccess = BaseResult.Success(Unit)
 
@@ -54,7 +57,7 @@ class DeleteUserUsecaseTest{
         `when`(userRepository.deleteUser(userDetail)).thenReturn(baseResultSuccess)
 
         // act
-        val result = deleteUserUsecase.invoke(userDetail)
+        val result = deleteUserUseCase.invoke(userDetail)
 
         // assert
         verify(userRepository).deleteUser(userDetail)
@@ -62,8 +65,8 @@ class DeleteUserUsecaseTest{
     }
 
     @Test
-    fun `should emit Failure when call is unsuccessfully` () = runTest {
-        val username ="John Doe"
+    fun `should emit Failure when call is unsuccessfully`() = runTest {
+        val username = "John Doe"
         val userDetail = UserDetail(username)
         val baseResultError = BaseResult.Error(
             Failure(
@@ -76,7 +79,7 @@ class DeleteUserUsecaseTest{
         `when`(userRepository.deleteUser(userDetail)).thenReturn(baseResultError)
 
         // act
-        val result = deleteUserUsecase.invoke(userDetail)
+        val result = deleteUserUseCase.invoke(userDetail)
 
         // assert
         verify(userRepository).deleteUser(userDetail)

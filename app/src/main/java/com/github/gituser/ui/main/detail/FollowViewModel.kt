@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.core.domain.common.base.BaseResult
 import com.github.core.domain.user.model.User
-import com.github.core.domain.user.usecase.GetUserFollowersUsecase
-import com.github.core.domain.user.usecase.GetUserFollowingUsecase
+import com.github.core.domain.user.usecase.GetUserFollowersUseCase
+import com.github.core.domain.user.usecase.GetUserFollowingUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class FollowViewModel(
-    private val getUserFollowersUsecase: GetUserFollowersUsecase,
-    private val getUserFollowingUsecase: GetUserFollowingUsecase
+    private val getUserFollowersUseCase: GetUserFollowersUseCase,
+    private val getUserFollowingUseCase: GetUserFollowingUseCase
 ) : ViewModel() {
     private val _stateFollower = MutableStateFlow<FollowFragmentState>(FollowFragmentState.Init)
     val stateFollower: StateFlow<FollowFragmentState> = _stateFollower
@@ -50,7 +50,7 @@ class FollowViewModel(
 
     fun getUserFollower(username: String) {
         viewModelScope.launch {
-            getUserFollowersUsecase.invoke(username).onStart {
+            getUserFollowersUseCase.invoke(username).onStart {
                 setFollowerLoading()
             }.catch { exception ->
                 hideFollowerLoading()
@@ -72,7 +72,7 @@ class FollowViewModel(
 
     fun getUserFollowing(username: String) {
         viewModelScope.launch {
-            getUserFollowingUsecase.invoke(username).onStart {
+            getUserFollowingUseCase.invoke(username).onStart {
                 setFollowingLoading()
             }.catch { exception ->
                 hideFollowingLoading()
