@@ -57,16 +57,6 @@ jobs:
 
       - run:
 
-          name: Gradle Version Check
-
-          command: ./gradlew -v
-      - run:
-
-          name: Gradle Clean
-
-          command: ./gradlew clean
-      - run:
-
           name: Download Dependencies
 
           command: ./gradlew androidDependencies
@@ -85,7 +75,7 @@ jobs:
 
           name: Run Build
 
-          command: ./gradlew build --warning-mode=all
+          command: ./gradlew build
 
       - store_artifacts:
 
