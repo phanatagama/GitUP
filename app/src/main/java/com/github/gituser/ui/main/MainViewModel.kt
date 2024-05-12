@@ -1,5 +1,6 @@
 package com.github.gituser.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -43,7 +44,9 @@ class MainViewModel constructor(
         viewModelScope.launch {
             getUsersByQueryUseCase.invoke(q).onStart {
                 setLoading()
-            }.catch { exception ->
+            }.catch {
+                    exception ->
+                Log.d("ERROR:", exception.message.toString())
                 hideLoading()
                 setError(exception.message.toString())
             }.collect { baseResult ->

@@ -22,6 +22,7 @@ class UserRemoteDataSource constructor(private val userApi: UserApi) {
                 val userEntity = response.body()?.items?.map { it.mapToDomain() } ?: listOf()
                 BaseResult.Success(userEntity)
             } else {
+            Log.d("ERROR:", response.message())
                 BaseResult.Error(
                     Failure(
                         code = response.code(),
@@ -30,6 +31,7 @@ class UserRemoteDataSource constructor(private val userApi: UserApi) {
                 )
             }
         } catch (e: Exception) {
+            Log.d("ERROR:", e.message.toString())
             BaseResult.Error(
                 Failure(
                     -1,
