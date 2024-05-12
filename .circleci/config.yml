@@ -85,7 +85,7 @@ jobs:
 
           name: Run Build
 
-          command: ./gradlew build
+          command: ./gradlew build --warning-mode=all
 
       - store_artifacts:
 
