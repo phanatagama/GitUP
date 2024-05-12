@@ -9,7 +9,6 @@ import com.github.core.domain.common.base.BaseResult
 import com.github.core.domain.common.base.Failure
 import com.github.core.domain.user.model.User
 import com.github.core.domain.user.model.UserDetail
-import com.github.core.domain.user.model.mapToEntity
 import com.github.core.domain.user.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
