@@ -9,7 +9,6 @@
 version: 2.1
 
 
-
 # Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
 
 # See: https://circleci.com/docs/orb-intro/
@@ -58,6 +57,16 @@ jobs:
 
       - run:
 
+          name: Gradle Version Check
+
+          command: ./gradlew -v
+      - run:
+
+          name: Gradle Clean
+
+          command: ./gradlew clean
+      - run:
+
           name: Download Dependencies
 
           command: ./gradlew androidDependencies
@@ -76,7 +85,7 @@ jobs:
 
           name: Run Build
 
-          command: ./gradlew build
+          command: ./gradlew build --warning-mode=all
 
       - store_artifacts:
 
